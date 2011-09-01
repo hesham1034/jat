@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.custom.i18n.resources" value="i18nResources"/>
+	
+	<package name="default" extends="struts-default" namespace="/">
+		<!-- 异常处理start -->
+		<global-results>
+			<result name="saveException" type="redirectAction">exception_saveException</result>
+			<result name="deleteException" type="redirectAction">exception_deleteException</result>
+			<result name="queryException" type="redirectAction">exception_queryException</result>
+			<result name="updateException" type="redirectAction">exception_updateException</result>
+			<result name="exception" type="redirectAction">exception_exception?message=${exception}</result>
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping result="saveException" exception="com.scommon.exception.SaveException"/>
+			<exception-mapping result="deleteException" exception="com.scommon.exception.DeleteException"/>
+			<exception-mapping result="queryException" exception="com.scommon.exception.QueryException"/>
+			<exception-mapping result="updateException" exception="com.scommon.exception.UpdateException"/>
+			<exception-mapping result="exception" exception="java.lang.Exception"/>
+		</global-exception-mappings>
+		
+		<action name="exception_*" class="exceptionAction" method="{1}"></action>
+		<!-- 异常处理end -->
+		
+		<action name="exception" class="exceptionAction" ></action>
+		<action name="*">
+			<result>{1}.jsp</result>
+		</action>
+	</package>
+</struts>    
