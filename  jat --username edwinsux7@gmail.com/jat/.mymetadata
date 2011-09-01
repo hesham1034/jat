@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="jat"
+  id="myeclipse.1314887586721"
+  context-root="/jat"
+  j2ee-spec="5.0"
+  archive="jat.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
