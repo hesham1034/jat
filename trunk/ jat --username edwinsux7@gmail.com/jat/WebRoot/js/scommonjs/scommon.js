@@ -8,7 +8,7 @@ scommon.failure = function(){
  * @return {TypeName} 
  */
 scommon.basePath = function(){
-	//console.log($("#basePath").val());
+	//console.log($("#basePath").val());加了jquery便可
 	return document.getElementById("basePath").value;
 }
 /**
