@@ -25,7 +25,6 @@
 	<classpathentry kind="lib" path="lib/spring3.0.5/org.springframework.transaction-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring3.0.5/org.springframework.web-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring3.0.5/spring-webmvc-2.5.4.jar"/>
-	<classpathentry kind="lib" path="lib/java_memcached-release_1.5.jar"/>
 	<classpathentry kind="lib" path="lib/jbpm4.4/activation.jar"/>
 	<classpathentry kind="lib" path="lib/jbpm4.4/cglib.jar"/>
 	<classpathentry kind="lib" path="lib/jbpm4.4/freemarker.jar"/>
