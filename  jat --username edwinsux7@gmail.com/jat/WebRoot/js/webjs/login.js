@@ -61,7 +61,7 @@ Ext.onReady(function(){
 		},{
 			items:[{
 			xtype: 'panel',
-			html: '<img src="'+scommon.basePath+'validate"/>' /*action提交后，变为.jsp被servlet拦截*/
+			html: '<img src="'+scommon.basePath()+'validate"/>' /*action提交后，变为.jsp被servlet拦截*/
 			}]
 		},{
 			layout: 'table',
