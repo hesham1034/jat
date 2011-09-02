@@ -61,10 +61,10 @@ public class MemcachedService {
 		sockIOPool.initialize();
 	}
 	private MemCachedClient getMemCachedClient() {
-		MemCachedClient mcc = new MemCachedClient();
-		mcc.setPoolName(poolName);
-		mcc.setCompressEnable(false);
-		mcc.setCompressThreshold(0);
+		MemCachedClient mcc = new MemCachedClient(poolName);
+		//mcc.setPoolName(poolName);
+		//mcc.setCompressEnable(false);
+		//mcc.setCompressThreshold(0);
 		return mcc;
 	}
 	
