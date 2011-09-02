@@ -43,8 +43,18 @@
     <filter-mapping>  
         <filter-name>CharacterEncodingFilter</filter-name>  
         <url-pattern>/*</url-pattern>  
-    </filter-mapping>  
-    
+    </filter-mapping>
+      
+    <!-- springSecurity3过滤器链 -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern> /* </url-pattern>
+	</filter-mapping>
+	
     <!-- struts2过滤器 -->
 	<filter>
 		<filter-name>struts2</filter-name>
