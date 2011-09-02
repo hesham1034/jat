@@ -63,7 +63,7 @@
 		<!-- 自动搜索包里面的实体类 -->
 		 <property name="packagesToScan">
 			<list>
-				<value>com.sc.jat.model</value>
+				<value>com.sc.jat.ss.model</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
