@@ -19,7 +19,7 @@
 	 -->
 	<context:annotation-config />
 	<!-- 自动查找配置的bean -->
-	<context:component-scan base-package="com.sc.webim" />
+	<context:component-scan base-package="com.sc.jat" />
 	
 	<!-- **********引入hibernate的配置属性文件************ -->
 	<bean id="extendedPropertyPlaceholderConfigurer" class="com.scommon.util.properties.ExtendedPropertyPlaceholderConfigurer">
@@ -63,7 +63,7 @@
 		<!-- 自动搜索包里面的实体类 -->
 		 <property name="packagesToScan">
 			<list>
-				<value>com.sc.webim.model</value>
+				<value>com.sc.jat.model</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -90,7 +90,7 @@
 	
 	<aop:config>
 		<aop:pointcut id="bussinessService"
-			expression="execution(public * com.sc.webim.service.*.*(..))" />
+			expression="execution(public * com.sc.jat.service.*.*(..))" />
 		<aop:advisor pointcut-ref="bussinessService"
 			advice-ref="txAdvice" />
 	</aop:config>
