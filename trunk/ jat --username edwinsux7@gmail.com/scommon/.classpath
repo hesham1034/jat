@@ -32,5 +32,6 @@
 	<classpathentry kind="lib" path="lib/jbpm4.4/mail.jar"/>
 	<classpathentry kind="lib" path="lib/struts2.2.1/struts2-core-2.2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/struts2.2.1/xwork-core-2.2.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/memcached2.5.3/java_memcached-release_2.5.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
