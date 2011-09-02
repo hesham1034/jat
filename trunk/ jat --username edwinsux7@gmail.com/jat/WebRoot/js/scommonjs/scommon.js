@@ -8,6 +8,7 @@ scommon.failure = function(){
  * @return {TypeName} 
  */
 scommon.basePath = function(){
+	//console.log($("#basePath").val());
 	return document.getElementById("basePath").value;
 }
 /**

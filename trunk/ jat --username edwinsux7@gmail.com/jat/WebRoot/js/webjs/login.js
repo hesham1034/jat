@@ -1,6 +1,8 @@
+Ext.namespace("jat.login");
 /**
  * @author sux
  * @desc 登录
+ * 用户SpringSecurity来管理登录，用户名、密码、提交的Action都需要设定为指定的名称 
  */
 Ext.onReady(function(){
 	Ext.QuickTips.init(); //错误信息显示必须
@@ -28,7 +30,7 @@ Ext.onReady(function(){
 			items:[{
 			xtype: 'textfield',
 			fieldLabel: '用户名', //form布局才显示出labelName
-			name: 'username',
+			name: 'j_username',
 			allowBlank: false,
 			msgTarget: 'side',
 			blankText: '用户名不能为空'
@@ -38,7 +40,7 @@ Ext.onReady(function(){
 			items:[{
 			xtype: 'textfield',
 			fieldLabel: '密&nbsp;&nbsp;&nbsp;码',
-			name: 'password',
+			name: 'j_password',
 			inputType: 'password',
 			allowBlank: false,
 			blankText: '用户密码不能为空',
@@ -59,7 +61,7 @@ Ext.onReady(function(){
 		},{
 			items:[{
 			xtype: 'panel',
-			html: '<img src="/hrmsys/validate"/>'
+			html: '<img src="'+scommon.basePath+'validate"/>' /*action提交后，变为.jsp被servlet拦截*/
 			}]
 		},{
 			layout: 'table',
@@ -74,7 +76,7 @@ Ext.onReady(function(){
 				style: 'margin-left: 30px;',
 				width: 60,
 				handler: function(){
-					loginForm.getForm().getEl().dom.action="user!login";
+					loginForm.getForm().getEl().dom.action="j_spring_security_check";
 					loginForm.getForm().getEl().dom.submit();
 				}
 			},{
