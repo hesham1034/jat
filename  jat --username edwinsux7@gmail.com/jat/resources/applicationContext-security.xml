@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:s="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+	default-lazy-init="true">
+
+	<!-- 国际化资源引入 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:i18nResources_zh_CN.properties" />
+	</bean>
+
+	
+	<!-- 设置登录页面为login.jsp且不拦截页面login.jsp后面的*防止带了参数 -->
+	<s:http auto-config="true" access-denied-page="/denied.jsp">
+		<!-- 需要设置跳转的主系统路径 -->
+		<s:form-login login-page="/login.jsp" 
+			default-target-url="${framework}index.jsp" authentication-failure-url="/login.jsp"/>
+		<s:intercept-url pattern="/login.jsp*" filters="none" />
+		
+		<!-- session失效 -->		
+		<s:session-management invalid-session-url="/invalid.jsp" />
+		
+		<!-- 自定义过滤器 -->	
+		<s:custom-filter ref="customFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+	</s:http>
+	
+	<bean id="customFilter" class="com.sc.ss.security.CustomFilter">
+		<property name="authenticationManager" ref="authenticationManager"/>
+		<property name="accessDecisionManager" ref="accessDecisionManager"/>
+		<property name="securityMetadataSource" ref="securityMetadataSource"/>
+	</bean>
+	<!-- 认证md5加密密码(原密码加盐值进行加密) -->
+	<s:authentication-manager alias="authenticationManager">
+		<s:authentication-provider user-service-ref="userDetailManager">
+			<s:password-encoder hash="md5">
+				<s:salt-source user-property="username"/>
+			</s:password-encoder>
+		</s:authentication-provider>
+	</s:authentication-manager>
+	
+</beans>
+<!-- 
+ss主要方面：
+1.spring配置文件的配置
+2.过滤器的新建
+3.决策类
+4.用户类
+5.用户信息提取类
+6.资源权限提取类
+ -->
