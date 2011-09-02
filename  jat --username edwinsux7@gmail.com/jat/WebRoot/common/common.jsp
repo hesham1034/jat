@@ -3,3 +3,5 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<!-- 设置系统基路径，便于JS取出 -->
+<input type="hidden" id="basePath" value="<%=basePath%>"/>

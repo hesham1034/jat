@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="com.scommon.util.SessionUtil"%>
 <%@ include file="common/common.jsp" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -19,9 +18,6 @@
 	<script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.6.min.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/jquery/ext-jquery-adapter.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/extjs/ext-all.js"></script>
-	<!-- pushlet2.0.4 -->
-	<script type="text/javascript" src="<%=basePath%>js/pushlet/ajax-pushlet-client.js"></script>
-	<script type="text/javascript" src="<%=basePath%>js/pushlet/callBack.js"></script>
 	<!-- 工具 -->
 	<script type="text/javascript" src="<%=basePath%>js/scommonjs/scommon.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/scommonjs/override/dialog.js"></script>
@@ -34,8 +30,7 @@
   </head>
   
   <body>
-  	<!-- 设置系统基路径，便于JS取出 -->
-	<input type="hidden" id="basePath" value="<%=basePath%>"/>
-	
+	  	<a href="post.action">post</a>
+  	<a href="delete.action">delete</a>
   </body>
 </html>
