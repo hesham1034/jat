@@ -19,19 +19,6 @@
 		<param-value>webim.root</param-value>
 	</context-param>
 	
-	 <!-- The pushlet -->
- 	<servlet>
-        <servlet-name>pushlet</servlet-name>
-        <servlet-class>nl.justobjects.pushlet.servlet.Pushlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <!-- The pushlet -->
-    <servlet-mapping>
-        <servlet-name>pushlet</servlet-name>
-        <url-pattern>/pushlet.srv</url-pattern>
-    </servlet-mapping>
-    
 	<!-- spring监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
