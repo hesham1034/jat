@@ -42,7 +42,7 @@ Ext.namespace("jat.main");
  						scope: this
  					}],
  					loader: new Ext.tree.TreeLoader({
- 						dataUrl: 'menu.action'
+ 						dataUrl: 'menu_load.action'
  					}),
  					//每加入进来的节点，若为非叶子节点则做为根节点继续进行查找
  					root: new Ext.tree.AsyncTreeNode({

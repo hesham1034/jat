@@ -20,7 +20,7 @@
 		<s:intercept-url pattern="/login.jsp*" filters="none" />
 		
 		<!-- session失效 -->		
-		<s:session-management invalid-session-url="/invalid.jsp" />
+		<s:session-management invalid-session-url="/login.jsp" />
 		
 		<!-- 自定义过滤器 -->	
 		<s:custom-filter ref="customFilter" before="FILTER_SECURITY_INTERCEPTOR"/>

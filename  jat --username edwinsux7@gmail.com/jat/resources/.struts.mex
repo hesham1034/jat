@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="default" location="10,165" size="525,245">
+    <action name="exception_*" location="65,58" size="150,40" />
+    <action name="exception" location="65,163" size="150,40" />
+    <action name="*" location="310,162" size="150,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="{1}.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="{1}.jsp" path="{1}.jsp" location="345,10" size="150,55" />
+</Struts2Diagram>
+

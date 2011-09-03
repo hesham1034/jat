@@ -64,6 +64,7 @@
 		 <property name="packagesToScan">
 			<list>
 				<value>com.sc.jat.ss.model</value>
+				<value>com.sc.jat.model</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
