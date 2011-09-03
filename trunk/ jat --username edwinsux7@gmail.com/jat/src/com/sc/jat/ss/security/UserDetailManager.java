@@ -38,6 +38,7 @@ public class UserDetailManager implements UserDetailsService {
 	 */
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 		Users user = usersDao.findByUsername(username);
+		if(null == user) return null;
 		List<String> authoritiesNames = authoritiesDao.findNameByUsername(username);
 		log.info(authoritiesNames);
 		List<GrantedAuthority> gAuthoritys = new ArrayList<GrantedAuthority>();

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.sc.jat.ss.dao.UsersDao;
 import com.sc.jat.ss.model.Users;
-import com.scommon.bean.jqGrid.PageParamBean;
-import com.scommon.bean.jqGrid.PageResultBean;
 import com.scommon.dao.BaseDao;
 
 /**   
@@ -42,12 +40,12 @@ public class UsersDaoImpl extends BaseDao<Users> implements UsersDao{
 		return null;   
 	}
 
-	public PageResultBean findByPageParamBean(PageParamBean pageParamBean) {
-		String hql = "FROM Users";
-		return findResultByPageParam(pageParamBean, hql);
-	}
-	public int findTotal(){
-		return super.findTotal();
-	}
+//	public PageResultBean findByPageParamBean(PageParamBean pageParamBean) {
+//		String hql = "FROM Users";
+//		return findResultByPageParam(pageParamBean, hql);
+//	}
+//	public int findTotal(){
+//		return super.findTotal();
+//	}
 }
    
