@@ -32,16 +32,25 @@ public class AccessDecisionManager implements org.springframework.security.acces
 		if(null == configAttributes){
 			return;
 		}
+		//若访问所需权限为空，则说明可以随意访问
+		if(null == configAttributes){
+			return;
+		}
+		//若无所需的某一种权限就拒绝访问
+		boolean flag = false;
 		for(ConfigAttribute configAttribute : configAttributes){
 			for(GrantedAuthority gAuthority : authentication.getAuthorities()){
 				log.info("conf="+configAttribute.getAttribute()+" auth="+gAuthority.getAuthority());
 				if(configAttribute.getAttribute().trim().equals(gAuthority.getAuthority().trim())){
-					return;
+					flag = true;
+					break;
 				}
 			}
+			if(!flag){
+				throw new AccessDeniedException("");//无权限抛出拒绝异常
+			}
+			flag = false;
 		}
-		//无权限抛出拒绝异常
-		throw new AccessDeniedException("");
 	}
 
 	public boolean supports(ConfigAttribute arg0) {

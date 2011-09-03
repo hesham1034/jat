@@ -33,7 +33,9 @@ Ext.onReady(function(){
 			name: 'j_username',
 			allowBlank: false,
 			msgTarget: 'side',
-			blankText: '用户名不能为空'
+			blankText: '用户名不能为空',
+			regex: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/,
+			regexText: '不能输入特殊字符'
 			}],
 			colspan: 2	
 		},{
@@ -44,7 +46,9 @@ Ext.onReady(function(){
 			inputType: 'password',
 			allowBlank: false,
 			blankText: '用户密码不能为空',
-			msgTarget: 'side'
+			msgTarget: 'side',
+			regex: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/, //字母、数字、汉字、下画线
+			regexText: '不能输入特殊字符',
 			}],
 			colspan: 2
 		},{
@@ -55,13 +59,21 @@ Ext.onReady(function(){
 			name: 'j_code',
 			allowBlank: false,
 			msgTarget: 'side',
-			width: 50	
+			width: 50,
+			listeners : {
+                specialkey : function(field, e) {//添加回车事件
+                    if (e.getKey() == Ext.EventObject.ENTER) {
+                        loginForm.getForm().getEl().dom.action="j_spring_security_check";
+						loginForm.getForm().getEl().dom.submit();
+                    }
+                }
+            }
 			}],
 			width: 120
 		},{
 			items:[{
 			xtype: 'panel',
-			html: '<img src="'+scommon.basePath()+'validate"/>' /*action提交后，变为.jsp被servlet拦截*/
+			html: '<img src="'+scommon.basePath()+'validate.jsp" title="点击刷新" style="cursor:hand" id="validate" onclick="refreshCode()"/>' /*action提交后，变为.jsp被servlet拦截*/
 			}]
 		},{
 			layout: 'table',
@@ -91,3 +103,6 @@ Ext.onReady(function(){
 		}]
 	});
 });
+function refreshCode(){
+	Ext.getDom('validate').src=scommon.basePath()+"validate.jsp?code="+Math.random();
+}
