@@ -52,7 +52,7 @@ Ext.onReady(function(){
 			xtype: 'textfield',
 			fieldLabel: '验证码',
 			blankText: '验证码不能为空',
-			name: 'validateCode',
+			name: 'j_code',
 			allowBlank: false,
 			msgTarget: 'side',
 			width: 50	

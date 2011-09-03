@@ -1,25 +1,26 @@
+Ext.namespace("jat.main");
 /**
  * @author sux
  * @date 2011-09-02
  * @desc main page
  */
  
- var mainPage = Ext.extend(Ext.Viewport,{
+ jat.main.MainPage = Ext.extend(Ext.Viewport,{
  	/**
  	 * 构造方法中进行整体布局
  	 */
  	constructor: function(username){
- 		mainPage.superclass.constructor.call(this,{
+ 		jat.main.MainPage.superclass.constructor.call(this,{
  			layout: 'border',
  			items: [{
  				region: 'north',
  				frame: true,
  				xtype: 'panel',
- 				bodyStyle: 'height: 80px;',
+ 				bodyStyle: 'height: 60px;',
  				layout: 'absolute',
- 				html: '<div id="user_header"><img src="img/user.png"/>&nbsp;' +
- 					  username+'&nbsp;&nbsp;<a href="">注销</a>' +
- 					  '</div>'
+ 				html: '',
+ 				collapsible: true,
+ 				titleCollapse: true
  			},{
  				region: 'west',
  				frame: 'true',

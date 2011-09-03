@@ -24,13 +24,16 @@
 	<script type="text/javascript" src="<%=basePath%>js/scommonjs/exception.js"></script>
 	<!-- ExtJs插件 -->
 	<script type="text/javascript" src="<%=basePath%>js/extjs/plugins/SearchField.js"></script>
-	
+	<script type="text/javascript" src="<%=basePath%>js/extjs/plugins/TabCloseMenu.js"></script>
+	<!-- 主页 -->
+	<script type="text/javascript" src="<%=basePath%>js/webjs/main.js"></script>
 	<script type="text/javascript">
+		var _main = new jat.main.MainPage();
+		_main.render("mainPage");
 	</script>
   </head>
   
   <body>
-	  	<a href="post.action">post</a>
-  	<a href="delete.action">delete</a>
+	  	<div id="mainPage"></div>
   </body>
 </html>

@@ -20,6 +20,7 @@
   
   <body>
   	${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message }
+  	${param.message == 1 ? "验证码错误 " : ""}
   	<div id="loginForm"></div>
   </body>
 </html>
