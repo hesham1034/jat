@@ -23,11 +23,37 @@ import org.apache.struts2.ServletActionContext;
  *   
  */
 public class SystemUtils {
+	/**
+	 * 
+	 * getSysURL:获取系统路径   
+	 *   
+	 * @param  @return    设定文件   
+	 * @return String    DOM对象   
+	 * @throws    
+	 * @since  scommon1.0
+	 */
 	public static String getSysURL(){
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String path = request.getContextPath();
 		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 		return basePath;
+	}
+
+	/**
+	 * 
+	 * isEmpty:判断是否为空
+	 *   
+	 * @param  @param value
+	 * @param  @return    空返回true   
+	 * @return boolean    DOM对象   
+	 * @throws    
+	 * @since  scommon1.0
+	 */
+	public static boolean isEmpty(String value) {
+		if(null != value && !"".equals(value)){
+			return false;
+		}
+		return false;   
 	}
 }
    
