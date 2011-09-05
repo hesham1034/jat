@@ -35,7 +35,7 @@ public interface LeaveService {
 	 * @throws    
 	 * @since  leave21.0
 	 */
-	public List<Leave> getLeaves(String userId);
+	public String getLeaves(String userId);
 
 	/**
 	 * 
@@ -47,7 +47,7 @@ public interface LeaveService {
 	 * @throws    
 	 * @since  leave21.0
 	 */
-	public List<Leave> getTasks(String loginName);
+	public String getTasks(String loginName);
 
 	public void save(Leave leave) throws SaveException;
 	/**

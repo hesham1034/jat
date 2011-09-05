@@ -27,8 +27,6 @@ import com.scommon.util.DateTimeUtils;
 public class LeaveAction extends BaseAction{
 	private LeaveService leaveService;
 	private Leave leave;
-	private List<Leave> leaves;
-	private List<Leave> tasks;
 	private String leaveId;
 	private String taskId;
 	
@@ -50,20 +48,24 @@ public class LeaveAction extends BaseAction{
 	
 	/**
 	 * 
-	 * init:初始化页面，查询出请假及任务列表   
+	 * listLeave:初始化页面，查询出请假及任务列表   
 	 *   
 	 * @param  @return    设定文件   
 	 * @return String    DOM对象   
 	 * @throws    
 	 * @since  leave21.0
 	 */
-	public String init(){
+	public String listLeave(){
 		Users user = (Users) getSession().getAttribute("user");
-		//请假列表
-		leaves = leaveService.getLeaves(user.getId());
-		//任务列表
-		tasks = leaveService.getTasks(user.getUsername());
-		return SUCCESS;
+		String leaves = leaveService.getLeaves(user.getId());
+		this.out(leaves);
+		return null;
+	}
+	public String listTask(){
+		Users user = (Users) getSession().getAttribute("user");
+		String tasks = leaveService.getTasks(user.getUsername());
+		this.out(tasks);
+		return null;
 	}
 	/**
 	 * 
@@ -90,8 +92,8 @@ public class LeaveAction extends BaseAction{
 			e.printStackTrace();
 			return ERROR;
 		}
-		this.leaves = leaveService.getLeaves(user.getId());
-		this.tasks = leaveService.getTasks(user.getUsername());
+		//String leaves = leaveService.getLeaves(user.getId());
+		//String tasks = leaveService.getTasks(user.getUsername());
 		return "leaveList";
 	}
 	/**
@@ -142,22 +144,6 @@ public class LeaveAction extends BaseAction{
 
 	public void setLeave(Leave leave) {
 		this.leave = leave;
-	}
-
-	public List<Leave> getLeaves() {
-		return leaves;
-	}
-
-	public void setLeaves(List<Leave> leaves) {
-		this.leaves = leaves;
-	}
-
-	public List<Leave> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(List<Leave> tasks) {
-		this.tasks = tasks;
 	}
 
 	public String getLeaveId() {

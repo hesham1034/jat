@@ -82,7 +82,7 @@
  */
 Ext.Ajax.on('requestcomplete',function(conn, response, options){
 	var data = Ext.util.JSON.decode(response.responseText);
-	if(data.exception == true){
+	if(null != data && data.exception == true){
 		Ext.Msg.alert("系统异常",data.msg);
 	}
 }, this);
