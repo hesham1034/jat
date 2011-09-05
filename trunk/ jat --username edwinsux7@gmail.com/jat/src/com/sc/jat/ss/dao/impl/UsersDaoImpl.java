@@ -3,11 +3,14 @@ package com.sc.jat.ss.dao.impl;
 
 import java.util.List;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Repository;
 
 import com.sc.jat.ss.dao.UsersDao;
 import com.sc.jat.ss.model.Users;
 import com.scommon.dao.BaseDao;
+import com.scommon.util.PagingBean;
 
 /**   
  * ClassName:UsersDaoImpl   
@@ -40,12 +43,9 @@ public class UsersDaoImpl extends BaseDao<Users> implements UsersDao{
 		return null;   
 	}
 
-//	public PageResultBean findByPageParamBean(PageParamBean pageParamBean) {
-//		String hql = "FROM Users";
-//		return findResultByPageParam(pageParamBean, hql);
-//	}
-//	public int findTotal(){
-//		return super.findTotal();
-//	}
+	public String findByPage(Integer start, Integer limit) {
+		String hql = "FROM Users";
+		return findStringByPage(hql, start, limit);
+	}
 }
    

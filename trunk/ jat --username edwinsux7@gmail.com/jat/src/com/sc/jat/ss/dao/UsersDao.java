@@ -3,6 +3,7 @@ package com.sc.jat.ss.dao;
 
 import com.sc.jat.ss.model.Users;
 import com.scommon.exception.QueryException;
+import com.scommon.util.PagingBean;
 
 /**   
  * ClassName:UsersDao   
@@ -24,6 +25,18 @@ public interface UsersDao {
 	 * @since  ss31.0
 	 */
 	Users findByUsername(String username) throws QueryException;
+	/**
+	 * 
+	 * findByPage:查询分页结果    
+	 *   
+	 * @param  @param start
+	 * @param  @param limit
+	 * @param  @return    设定文件   
+	 * @return PagingBean    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	String findByPage(Integer start, Integer limit);
 
 }
    

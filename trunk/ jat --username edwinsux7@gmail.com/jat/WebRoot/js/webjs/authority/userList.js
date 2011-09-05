@@ -16,18 +16,47 @@ jat.authority.UserPanel = Ext.extend(Ext.Panel, {
 	}
 })
 
-jat.authority.UserQueryForm = Ext.extend(Ext.FormPanel, {
+jat.authority.UserQueryForm = Ext.extend(Ext.form.FormPanel, {
 	id: 'userQueryFormId',
 	height: 70,
 	construtctor: function(){
 		jat.authority.UserQueryForm.superclass.constructor.call(this,{
-			
+			layout: 'table',
+			layoutConfig: {
+				columns: 3
+			},
+			defaults: {
+				labelWidth: '60',
+				labelAlign: 'right'
+			},
+			items: [{
+				layout: 'form',
+				items: [{
+					xtype: 'textfield',
+					fieldLabel: '用户名',
+					width: 60
+				}]
+			},{
+				layout: 'form',
+				items: [{
+					xtype: 'textfield',
+					fieldLabel: '角色名',
+					width: 60
+				}]
+			},{
+				buttons: [{
+					text: '查询'
+				},{
+					text: '取消'
+				}]
+			}]
 		})		
 	}
 })
 
 jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 	id: 'userListId',
+	height: 500,
 	constructor: function(){
 		var _sm = new Ext.grid.CheckboxSelectionModel();
 		var _num = new Ext.grid.NumberColumn();
@@ -48,7 +77,7 @@ jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 				}
 			]);
 		var _userStore = new Ext.data.JsonStore({
-			url: 'user_list.action',
+			url: 'users_list.action',
 			root: 'root',
 			totalProperty: 'totalProperty',
 			fields: ['username', 'role', 'enabled']
@@ -58,6 +87,7 @@ jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 		jat.authority.UserList.superclass.constructor.call(this,{
 			sm: _sm,
 			cm: _cm,
+			store: _userStore,
 			tbar: new Ext.Toolbar({
 				items: [{}]
 			}),
