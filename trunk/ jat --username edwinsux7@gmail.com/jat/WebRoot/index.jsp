@@ -31,6 +31,8 @@
 	<!-- jbpm应用 -->
 	<script type="text/javascript" src="<%=basePath%>js/webjs/jbpm/leaveList.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/webjs/jbpm/leaveForm.js"></script>
+	<!-- 权限管理SpringSecurity应用 -->
+	<script type="text/javascript" src="<%=basePath%>js/webjs/authority/userList.js"></script>
 	<script type="text/javascript">
 		var _main = new jat.main.MainPage();
 		_main.render("mainPage");
