@@ -31,6 +31,7 @@ public class Users implements Serializable{
 	private String password;
 	private Integer enabled;
 	private Roles role;
+	private String position;
 	
 	@Id
 	@GenericGenerator(name="system-uuid", strategy="com.scommon.util.UUIDGenerator")
@@ -73,6 +74,13 @@ public class Users implements Serializable{
 	}
 	public void setRole(Roles role) {
 		this.role = role;
+	}
+	@Column(name="position", length=50, insertable=true, updatable=true, nullable=false)
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
 	}
 }
    

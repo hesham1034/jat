@@ -63,6 +63,7 @@
 		<!-- 自动搜索包里面的实体类 -->
 		 <property name="packagesToScan">
 			<list>
+				<value>com.sc.jat.jbpm.model</value>
 				<value>com.sc.jat.ss.model</value>
 				<value>com.sc.jat.model</value>
 			</list>
@@ -75,7 +76,22 @@
 				<prop key="hibernate.hbm2ddl.auto">${auto}</prop>
 			</props>
 		</property>
+		<property name="mappingLocations">
+			<list>
+				<!-- 以下几个jbpm.*.hbm.xml由jBPM自带 -->
+				<value>classpath:jbpm.repository.hbm.xml</value>   
+                <value>classpath:jbpm.execution.hbm.xml</value>   
+                <value>classpath:jbpm.history.hbm.xml</value>   
+                <value>classpath:jbpm.task.hbm.xml</value>   
+                <value>classpath:jbpm.identity.hbm.xml</value> 
+			</list>
+		</property>
 	</bean>
+	
+	<!-- jbpm start -->
+	<bean id="springHelper" class="org.jbpm.pvm.internal.processengine.SpringHelper"/>
+	<bean id="processEngine" factory-bean="springHelper" factory-method="createProcessEngine"/>
+	<!-- jbpm end -->
 	
 	<!-- 配置事务 begin -->
 	<bean id="txManager"
