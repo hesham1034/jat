@@ -1,10 +1,10 @@
-Ext.namespace("jat.jbpm.leave");
-jat.jbpm.leave.LeaveTaskPanel = Ext.extend(Ext.Panel, {
+Ext.namespace("jat.jbpm.leaveList");
+jat.jbpm.leaveList.LeaveTaskPanel = Ext.extend(Ext.Panel, {
 	id: 'leaveTaskPanelId',
 	constructor: function(){
 		//var _leavePanel = new jat.jbpm.leave.LeavePanel();
 		//var _taskPanel = new jat.jbpm.leave.TaskPanel();
-		jat.jbpm.leave.LeaveTaskPanel.superclass.constructor.call(this, {
+		jat.jbpm.leaveList.LeaveTaskPanel.superclass.constructor.call(this, {
 			items: []
 		});
 	}
@@ -12,13 +12,13 @@ jat.jbpm.leave.LeaveTaskPanel = Ext.extend(Ext.Panel, {
 /**
  *请假面板
  */
-jat.jbpm.leave.LeavePanel = Ext.extend(Ext.Panel, {
+jat.jbpm.leaveList.LeavePanel = Ext.extend(Ext.Panel, {
 	id: 'leavePanelId',
 	title: '请假栏',
 	constructor: function(){
 		var _leaveGrid = new jat.jbpm.leave.LeaveGrid();
 		var _leaveQueryForm = new jat.jbpm.leave.LeaveQueryForm();
-		jat.jbpm.leave.LeavePanel.superclass.constructor.call(this,{
+		jat.jbpm.leaveList.LeavePanel.superclass.constructor.call(this,{
 			items: [_leaveQueryForm, _leaveGrid]
 		});
 	}
@@ -26,11 +26,11 @@ jat.jbpm.leave.LeavePanel = Ext.extend(Ext.Panel, {
 /**
  * 请假查询面板
  */
-jat.jbpm.leave.LeaveQueryForm = Ext.extend(Ext.form.FormPanel, {
+jat.jbpm.leaveList.LeaveQueryForm = Ext.extend(Ext.form.FormPanel, {
 	height: '100%',
 	width: '100%',
 	constructor: function(){
-		jat.jbpm.leave.LeaveQueryForm.superclass.constructor.call(this, {
+		jat.jbpm.leaveList.LeaveQueryForm.superclass.constructor.call(this, {
 			layout: 'table',
 			layoutConfig: {
 				columns: 4
@@ -77,7 +77,7 @@ jat.jbpm.leave.LeaveQueryForm = Ext.extend(Ext.form.FormPanel, {
 /**
  * 请假列表
  */
-jat.jbpm.leave.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
+jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 	id: 'leaveGridId',
 	constructor: function(){
 		var _sm = new Ext.grid.CheckboxSelectionModel();
@@ -122,7 +122,7 @@ jat.jbpm.leave.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		    }]
 		});
 		var _paging = new jat.scommon.gridUtils.PagingToolbar(_leaveStore, 20);
-		jat.jbpm.leave.LeaveGrid.superclass.constructor.call(this,{
+		jat.jbpm.leaveList.LeaveGrid.superclass.constructor.call(this,{
 			border: false,
 			sm: _sm,
 			cm: _cm,
@@ -142,13 +142,13 @@ jat.jbpm.leave.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 /**
  * 任务面板
  */
-jat.jbpm.leave.TaskPanel = Ext.extend(Ext.Panel, {
+jat.jbpm.leaveList.TaskPanel = Ext.extend(Ext.Panel, {
 	id: 'taskPanelId',
 	title: '任务栏',
 	constructor: function(){
 		var _leaveQueryForm = new jat.jbpm.leave.LeaveQueryForm();
 		var _taskGrid = new jat.jbpm.leave.TaskGrid();
-		jat.jbpm.leave.TaskPanel.superclass.constructor.call(this,{
+		jat.jbpm.leaveList.TaskPanel.superclass.constructor.call(this,{
 			items: [_leaveQueryForm, _taskGrid]
 		});
 	}
@@ -157,7 +157,7 @@ jat.jbpm.leave.TaskPanel = Ext.extend(Ext.Panel, {
 /**
  * 任务列表
  */
-jat.jbpm.leave.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
+jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 	id: 'taskGridId',
 	constructor: function(){
 		var _sm = new Ext.grid.CheckboxSelectionModel();
@@ -198,7 +198,7 @@ jat.jbpm.leave.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    }]
 		});
 		var _paging = new jat.scommon.gridUtils.PagingToolbar(_leaveStore, 20);
-		jat.jbpm.leave.TaskGrid.superclass.constructor.call(this,{
+		jat.jbpm.leaveList.TaskGrid.superclass.constructor.call(this,{
 			border: false,
 			sm: _sm,
 			cm: _cm,
