@@ -594,6 +594,19 @@ insert  into `roles`(`id`,`name`) values ('1312863325335e1b9c3c768e4c079c14','�
 
 /*Table structure for table `users` */
 
+
+
+deptInfoGridPanel.superclass.constructor.call(this,{
+			width: Ext.getCmp('mainTab').getActiveTab().getInnerWidth(),
+			height: Ext.getCmp('mainTab').getActiveTab().getInnerHeight(),
+			/**表格高度自适应 document.body.clientHeight浏览器页面高度 start**/
+			monitorResize: true, 
+			doLayout: function() { 
+				this.setWidth(document.body.clientWidth-205);
+				this.setHeight(document.body.clientHeight-140);
+				Ext.grid.GridPanel.prototype.doLayout.call(this); 
+			} ,
+			/**end**/
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
