@@ -27,6 +27,8 @@
 	<script type="text/javascript" src="<%=basePath%>js/extjs/plugins/TabCloseMenu.js"></script>
 	<!-- 主页 -->
 	<script type="text/javascript" src="<%=basePath%>js/webjs/main.js"></script>
+	<!-- jbpm应用 -->
+	<script type="text/javascript" src="<%=basePath%>js/webjs/jbpm/leave.js"></script>
 	<script type="text/javascript">
 		var _main = new jat.main.MainPage();
 		_main.render("mainPage");
