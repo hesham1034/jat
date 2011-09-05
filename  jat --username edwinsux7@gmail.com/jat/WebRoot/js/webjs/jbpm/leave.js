@@ -13,7 +13,7 @@ jat.jbpm.leave.LeavePanel = Ext.extend(Ext.panel, {
 	}
 });
 /**
- * 
+ * 请假列表
  */
 jat.jbpm.leave.LeaveGrid = Ext.extend(Ext.data.grid, {
 	id: 'leaveGridId',
@@ -26,18 +26,40 @@ jat.jbpm.leave.LeaveGrid = Ext.extend(Ext.data.grid, {
 		    	header: '请假天数',
 		    	dataIndex: 'day',
 		    	align: 'center'
+		    },{
+		    	header: '事理',
+		    	dataIndex: 'content',
+		    	align: 'center'
+		    },{
+		    	header: '状态',
+		    	dataIndex: 'status',
+		    	align: 'center'
+		    },{
+		    	header: '申请时间',
+		    	dataIndex: 'applyTime',
+		    	align: 'center'
 		    }
 		]);
 		var _leaveStore = Ext.data.JsonStore({
-			
+			url: 'leave_listLeave.action',
+			Field: ['day','content','status','applyTime']
 		});
+		var _paging = null;
 		jat.jbpm.leave.LeaveGrid.superclass.constructor.call(this,{
-			
+			sm: _sm,
+			cm: _cm,
+			store: _leaveStore,
+			tbar: new Ext.Toolbar({
+				
+			}),
+			bbar: _pagin
 		});
 	}
 	
 });
-
+/**
+ * 任务列表
+ */
 jat.jbpm.leave.TaskGrid = Ext.extend(Ext.data.grid, {
 	
 });
