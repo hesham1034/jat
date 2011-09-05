@@ -4,7 +4,7 @@
 <html>
   <head>
 	<script type="text/javascript">
-		var _leaveTaskPanel = new jat.jbpm.leave.LeaveTaskPanel();
+		var _leaveTaskPanel = new jat.jbpm.leaveList.LeaveTaskPanel();
 		_leaveTaskPanel.render("leaveTaskPanelDiv");
 	</script>
   </head>
