@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -15,8 +17,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.util.Assert;
 
-import com.scommon.bean.jqGrid.PageParamBean;
-import com.scommon.bean.jqGrid.PageResultBean;
 import com.scommon.exception.SaveException;
 import com.scommon.exception.UpdateException;
 
@@ -372,11 +372,10 @@ public class BaseDao<T> extends HibernateBaseDao<T> {
 	 * @throws    
 	 * @since  scommon1.0
 	 */
-	public PageResultBean findResultByPageParam(PageParamBean pageParamBean, String hql){
-		PageResultBean pageResultBean = new PageResultBean(pageParamBean.getPage(), 
-				pageParamBean.getRows(), findTotal(),findByPage(hql, pageParamBean.getStart(),
-				pageParamBean.getRows()));
-		return pageResultBean;
+	public String findStringByPage(String hql, int start, int limit){
+		String root = JSONArray.fromObject(findByPage(hql, start, limit)).toString();
+		int totalProperty = findTotal();
+		return "{totalProperty:" + totalProperty + ",root:" + root + "}";
 	}
 	/**
 	 * 
