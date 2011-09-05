@@ -35,7 +35,7 @@ Ext.namespace("jat.main");
  					autoScroll: true,
  					border: false,
  					id: 'tree',
- 					rootVisible:true,//不隐藏根节点
+ 					rootVisible:false,//隐藏根节点
  					tools: [{
  						id: 'refresh',
  						handler: '',
@@ -127,9 +127,9 @@ Ext.namespace("jat.main");
  	 clickNode : function(node, e){
  	 	if(node.attributes.leaf){
  	 		var nodeId = node.attributes.id;
- 	 		var nodeUrl = node.attributes.menuUrl;
+ 	 		var nodeUrl = node.attributes.url;
  	 		var nodeText = node.attributes.text;
- 	 		var nodeIcon = node.attributes.menuIcon;
+ 	 		var nodeIcon = node.attributes.icon;
  	 		this.addTab(nodeId, nodeUrl, nodeText, nodeIcon);
  	 	};
  	 }
