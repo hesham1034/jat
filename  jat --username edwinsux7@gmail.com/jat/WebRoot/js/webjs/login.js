@@ -48,7 +48,7 @@ Ext.onReady(function(){
 			blankText: '用户密码不能为空',
 			msgTarget: 'side',
 			regex: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/, //字母、数字、汉字、下画线
-			regexText: '不能输入特殊字符',
+			regexText: '不能输入特殊字符'
 			}],
 			colspan: 2
 		},{

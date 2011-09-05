@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
+
 import org.jbpm.api.ProcessInstance;
 import org.jbpm.api.task.Task;
 import org.springframework.stereotype.Service;
@@ -38,7 +40,7 @@ public class LeaveServiceImpl implements LeaveService{
 		log.info("发布新流程version:" + version);
 	}
 	
-	public List<Leave> getTasks(String loginName) {
+	public String getTasks(String loginName) {
 		List<Task> tasks = jbpmDao.findByUserName(loginName);
 		List<Leave> leaves = new ArrayList<Leave>();
 		
@@ -49,7 +51,7 @@ public class LeaveServiceImpl implements LeaveService{
 			leave.setTaskId(taskId);
 			leaves.add(leave);
 		}
-		return leaves;   
+		return JSONArray.fromObject(leaves).toString();   
 	}
 	
 	public void save(Leave leave) throws SaveException{
@@ -115,8 +117,9 @@ public class LeaveServiceImpl implements LeaveService{
 		leaveDao.update(leave);
 	}
 	
-	public List<Leave> getLeaves(String userId) {
-		return leaveDao.findByUserId(userId);
+	public String getLeaves(String userId) {
+		List<Leave> leaves = leaveDao.findByUserId(userId);
+		return JSONArray.fromObject(leaves).toString();
 	}
 	
 	public JbpmDao getJbpmDao() {
