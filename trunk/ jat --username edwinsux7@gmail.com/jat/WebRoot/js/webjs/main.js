@@ -58,7 +58,11 @@ Ext.namespace("jat.main");
  						}
  					}
  				}]
- 			},this.center]
+ 			},this.center,{
+ 				region: 'south',
+ 				frame: true,
+ 				height: 20
+ 			}]
  		});
  	},
  	

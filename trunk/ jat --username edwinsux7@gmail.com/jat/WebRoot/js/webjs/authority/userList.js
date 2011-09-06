@@ -18,7 +18,7 @@ jat.authority.UserPanel = Ext.extend(Ext.Panel, {
 
 jat.authority.UserQueryForm = Ext.extend(Ext.form.FormPanel, {
 	id: 'userQueryFormId',
-	height: 70,
+	height: 30,
 	constructor: function(){
 		jat.authority.UserQueryForm.superclass.constructor.call(this,{
 			layout: 'table',
@@ -95,9 +95,16 @@ jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 		var _tbar = new Ext.Toolbar({
 			items: [{}]
 		});
-		var _paging = new jat.scommon.gridUtils.PagingToolbar(_userStore, 20);
+		var _paging = new jat.scommon.gridUtils.PagingToolbar("userListPage", _userStore, 20);
 		
 		jat.authority.UserList.superclass.constructor.call(this,{
+			//随浏览器大小变动的自适应代码
+			monitorResize: true, 
+			doLayout: function() { 
+				this.setWidth(document.body.clientWidth-205);
+				this.setHeight(document.body.clientHeight-190);
+				Ext.grid.GridPanel.prototype.doLayout.call(this); 
+			},
 			sm: _sm,
 			cm: _cm,
 			store: _userStore,
