@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.jbpm.api.ProcessInstance;
 import org.jbpm.api.task.Task;
@@ -15,9 +16,10 @@ import org.springframework.stereotype.Service;
 
 import com.sc.jat.jbpm.dao.LeaveDao;
 import com.sc.jat.jbpm.dao.impl.JbpmDao;
-import com.sc.jat.jbpm.model.Leave;
+import com.sc.jat.jbpm.model.Leaved;
 import com.sc.jat.jbpm.service.LeaveService;
 import com.scommon.exception.SaveException;
+import com.scommon.util.PagingBean;
 import com.sun.org.apache.commons.logging.Log;
 import com.sun.org.apache.commons.logging.LogFactory;
 
@@ -42,19 +44,35 @@ public class LeaveServiceImpl implements LeaveService{
 	
 	public String getTasks(String loginName) {
 		List<Task> tasks = jbpmDao.findByUserName(loginName);
-		List<Leave> leaves = new ArrayList<Leave>();
+		List<Leaved> leaves = new ArrayList<Leaved>();
 		
 		for(Task task : tasks){
 			String taskId = task.getId();
 			String leaveId = (String) jbpmDao.findByTaskIdAndProperty(taskId, "leaveId");
-			Leave leave = leaveDao.findByLeaveId(leaveId);
+			Leaved leave = leaveDao.findByLeaveId(leaveId);
 			leave.setTaskId(taskId);
 			leaves.add(leave);
 		}
 		return JSONArray.fromObject(leaves).toString();   
 	}
 	
-	public void save(Leave leave) throws SaveException{
+	public String getTasks(String username, Integer start, Integer limit) {
+		PagingBean taskBean = jbpmDao.findByUserName(username, start, limit);
+		List<Task> tasks = (List<Task>) taskBean.getRoot();
+		List<Leaved> leaves = new ArrayList<Leaved>();
+		//根据任务获取请假信息
+		for(Task task : tasks){
+			String taskId = task.getId();
+			String leaveId = (String) jbpmDao.findByTaskIdAndProperty(taskId, "leaveId");
+			Leaved leave = leaveDao.findByLeaveId(leaveId);
+			leave.setTaskId(taskId);
+			leaves.add(leave);
+		}
+		taskBean.setRoot(leaves);
+		return JSONArray.fromObject(taskBean).toString();   
+	}
+	
+	public void save(Leaved leave) throws SaveException{
 		leaveDao.save(leave);
 	}
 	
@@ -77,14 +95,14 @@ public class LeaveServiceImpl implements LeaveService{
 		jbpmDao.completeTask(taskId);
 		
 		//修改请假信息状态
-		Leave leave = leaveDao.findByLeaveId(leaveId);
+		Leaved leave = leaveDao.findByLeaveId(leaveId);
 		leave.setStatus(1);//审核中
 		leaveDao.update(leave);
 	}
 	
 	public void agree(String taskId) {
 		String leaveId = (String) jbpmDao.findByTaskIdAndProperty(taskId, "leaveId");
-		Leave leave = leaveDao.findByLeaveId(leaveId);
+		Leaved leave = leaveDao.findByLeaveId(leaveId);
 		Task task = jbpmDao.findByTaskId(taskId);
 		String assignee = task.getAssignee();
 		if("sux".equals(assignee)){
@@ -105,7 +123,7 @@ public class LeaveServiceImpl implements LeaveService{
 	
 	public void disagree(String taskId){
 		String leaveId = (String) jbpmDao.findByTaskIdAndProperty(taskId, "leaveId");
-		Leave leave = leaveDao.findByLeaveId(leaveId);
+		Leaved leave = leaveDao.findByLeaveId(leaveId);
 		Task task = jbpmDao.findByTaskId(taskId);
 		String assignee = task.getAssignee();
 		if("sux".equals(assignee)){
@@ -117,8 +135,13 @@ public class LeaveServiceImpl implements LeaveService{
 		leaveDao.update(leave);
 	}
 	
+	public String getLeaves(String userId, Integer start, Integer limit) {
+		PagingBean pagingBean = leaveDao.findByUserIdAndPage(userId, start, limit);  
+		return JSONObject.fromObject(pagingBean).toString();   
+	}
+	
 	public String getLeaves(String userId) {
-		List<Leave> leaves = leaveDao.findByUserId(userId);
+		List<Leaved> leaves = leaveDao.findByUserId(userId);
 		return JSONArray.fromObject(leaves).toString();
 	}
 	
@@ -137,6 +160,5 @@ public class LeaveServiceImpl implements LeaveService{
 	public void setLeaveDao(LeaveDao leaveDao) {
 		this.leaveDao = leaveDao;
 	}
-
 }
    

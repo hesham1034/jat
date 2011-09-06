@@ -3,8 +3,6 @@ package com.sc.jat.ss.dao.impl;
 
 import java.util.List;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.stereotype.Repository;
 
 import com.sc.jat.ss.dao.UsersDao;
@@ -43,7 +41,7 @@ public class UsersDaoImpl extends BaseDao<Users> implements UsersDao{
 		return null;   
 	}
 
-	public String findByPage(Integer start, Integer limit) {
+	public PagingBean findByPage(Integer start, Integer limit) {
 		String hql = "FROM Users";
 		return findStringByPage(hql, start, limit);
 	}

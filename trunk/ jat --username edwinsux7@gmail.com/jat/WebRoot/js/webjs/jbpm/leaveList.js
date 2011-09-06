@@ -2,10 +2,10 @@ Ext.namespace("jat.jbpm.leaveList");
 jat.jbpm.leaveList.LeaveTaskPanel = Ext.extend(Ext.Panel, {
 	id: 'leaveTaskPanelId',
 	constructor: function(){
-		//var _leavePanel = new jat.jbpm.leave.LeavePanel();
-		//var _taskPanel = new jat.jbpm.leave.TaskPanel();
+		var _leavePanel = new jat.jbpm.leaveList.LeavePanel();
+		var _taskPanel = new jat.jbpm.leaveList.TaskPanel();
 		jat.jbpm.leaveList.LeaveTaskPanel.superclass.constructor.call(this, {
-			items: []
+			items: [_leavePanel, _taskPanel]
 		});
 	}
 });
@@ -16,8 +16,8 @@ jat.jbpm.leaveList.LeavePanel = Ext.extend(Ext.Panel, {
 	id: 'leavePanelId',
 	title: '请假栏',
 	constructor: function(){
-		var _leaveGrid = new jat.jbpm.leave.LeaveGrid();
-		var _leaveQueryForm = new jat.jbpm.leave.LeaveQueryForm();
+		var _leaveGrid = new jat.jbpm.leaveList.LeaveGrid();
+		var _leaveQueryForm = new jat.jbpm.leaveList.LeaveQueryForm();
 		jat.jbpm.leaveList.LeavePanel.superclass.constructor.call(this,{
 			items: [_leaveQueryForm, _leaveGrid]
 		});
@@ -33,7 +33,7 @@ jat.jbpm.leaveList.LeaveQueryForm = Ext.extend(Ext.form.FormPanel, {
 		jat.jbpm.leaveList.LeaveQueryForm.superclass.constructor.call(this, {
 			layout: 'table',
 			layoutConfig: {
-				columns: 4
+				columns: 5
 			},
 			defaults: {
 				labelWidth: 60,
@@ -63,13 +63,13 @@ jat.jbpm.leaveList.LeaveQueryForm = Ext.extend(Ext.form.FormPanel, {
 					width: 100
 				}]
 			},{
-				buttons:[{
-					text: '查询',
-					handler: ''	
-				},{
-					text: '重置',
-					handler: ''
-				}]
+				style: 'margin: 0px 0px 0px 20px;',
+				xtype: 'button',
+				text: '查询'
+			},{
+				style: 'margin: 0px 0px 0px 10px;',
+				xtype: 'button',
+				text: '重置'
 			}]
 		});
 	}
@@ -146,8 +146,8 @@ jat.jbpm.leaveList.TaskPanel = Ext.extend(Ext.Panel, {
 	id: 'taskPanelId',
 	title: '任务栏',
 	constructor: function(){
-		var _leaveQueryForm = new jat.jbpm.leave.LeaveQueryForm();
-		var _taskGrid = new jat.jbpm.leave.TaskGrid();
+		var _leaveQueryForm = new jat.jbpm.leaveList.LeaveQueryForm();
+		var _taskGrid = new jat.jbpm.leaveList.TaskGrid();
 		jat.jbpm.leaveList.TaskPanel.superclass.constructor.call(this,{
 			items: [_leaveQueryForm, _taskGrid]
 		});

@@ -29,9 +29,6 @@ public class AccessDecisionManager implements org.springframework.security.acces
 	 */
 	public void decide(Authentication authentication, Object arg1, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		if(null == configAttributes){
-			return;
-		}
 		//若访问所需权限为空，则说明可以随意访问
 		if(null == configAttributes){
 			return;

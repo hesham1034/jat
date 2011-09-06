@@ -46,7 +46,7 @@ public class UserDetailManager implements UserDetailsService {
 			GrantedAuthorityImpl gai = new GrantedAuthorityImpl(authoritiesName);
 			gAuthoritys.add(gai);
 		}
-		return new CustomUserDetails(user.getPassword(), user.getUsername(), true, true, true, true, gAuthoritys);
+		return new CustomUserDetails(user.getId(), user.getPassword(), user.getUsername(), true, true, true, true, gAuthoritys);
 	}
 
 	public UsersDao getUsersDao() {

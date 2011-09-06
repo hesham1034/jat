@@ -12,18 +12,18 @@ jat.authority.UserPanel = Ext.extend(Ext.Panel, {
 		var _userList = new jat.authority.UserList();
 		jat.authority.UserPanel.superclass.constructor.call(this,{
 			items: [_userQueryForm,_userList]
-		})
+		});
 	}
-})
+});
 
 jat.authority.UserQueryForm = Ext.extend(Ext.form.FormPanel, {
 	id: 'userQueryFormId',
 	height: 70,
-	construtctor: function(){
+	constructor: function(){
 		jat.authority.UserQueryForm.superclass.constructor.call(this,{
 			layout: 'table',
 			layoutConfig: {
-				columns: 3
+				columns: 4
 			},
 			defaults: {
 				labelWidth: '60',
@@ -34,32 +34,34 @@ jat.authority.UserQueryForm = Ext.extend(Ext.form.FormPanel, {
 				items: [{
 					xtype: 'textfield',
 					fieldLabel: '用户名',
-					width: 60
+					width: 100
 				}]
 			},{
 				layout: 'form',
 				items: [{
 					xtype: 'textfield',
 					fieldLabel: '角色名',
-					width: 60
+					width: 100
 				}]
 			},{
-				buttons: [{
-					text: '查询'
-				},{
-					text: '取消'
-				}]
+				style: 'margin: 0px 0px 0px 20px;',
+				xtype: 'button',
+				text: '查询'
+			},{
+				style: 'margin: 0px 0px 0px 10px;',
+				xtype: 'button',
+				text: '重置'
 			}]
-		})		
+		});		
 	}
-})
+});
 
 jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 	id: 'userListId',
 	height: 500,
 	constructor: function(){
 		var _sm = new Ext.grid.CheckboxSelectionModel();
-		var _num = new Ext.grid.NumberColumn();
+		var _num = new Ext.grid.RowNumberer();
 		var _cm = new Ext.grid.ColumnModel([
 				_num, _sm,
 				{
@@ -71,16 +73,27 @@ jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 					dataIndex: 'role',
 					align: 'center'
 				},{
+					header: '职位',
+					dataIndex: 'position',
+					align: 'center'
+				},{
 					header: '是否禁用',
 					dataIndex: 'enabled',
-					align: 'center'
+					align: 'center',
+					renderer: function(value){
+						if(value == 1){ return "是";}
+						else{return "否";}
+					}
 				}
 			]);
 		var _userStore = new Ext.data.JsonStore({
 			url: 'users_list.action',
 			root: 'root',
 			totalProperty: 'totalProperty',
-			fields: ['username', 'role', 'enabled']
+			fields: ['username', {name: 'role', convert: function(v){return v.name;}}, 'position', 'enabled']
+		});
+		var _tbar = new Ext.Toolbar({
+			items: [{}]
 		});
 		var _paging = new jat.scommon.gridUtils.PagingToolbar(_userStore, 20);
 		
@@ -88,9 +101,7 @@ jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 			sm: _sm,
 			cm: _cm,
 			store: _userStore,
-			tbar: new Ext.Toolbar({
-				items: [{}]
-			}),
+			tbar: _tbar,
 			bbar: _paging
 		});
 		
@@ -99,6 +110,6 @@ jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 				start: 0,
 				limit: 20
 			}
-		})
+		});
 	}
-})
+});

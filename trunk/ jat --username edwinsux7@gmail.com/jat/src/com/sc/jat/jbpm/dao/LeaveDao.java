@@ -3,7 +3,8 @@ package com.sc.jat.jbpm.dao;
 
 import java.util.List;
 
-import com.sc.jat.jbpm.model.Leave;
+import com.sc.jat.jbpm.model.Leaved;
+import com.scommon.util.PagingBean;
 
 /**   
  * ClassName:LeaveService   
@@ -15,13 +16,26 @@ import com.sc.jat.jbpm.model.Leave;
  */
 public interface LeaveDao {
 
-	List<Leave> findByUserId(String userId);
+	List<Leaved> findByUserId(String userId);
 
-	Leave findByLeaveId(String leaveId);
+	Leaved findByLeaveId(String leaveId);
 
-	void save(Leave leave);
+	void save(Leaved leave);
 
-	void update(Leave leave);
+	void update(Leaved leave);
+	/**
+	 * 
+	 * findByUserIdAndPage:分页请假列表   
+	 *   
+	 * @param  @param userId
+	 * @param  @param start
+	 * @param  @param limit
+	 * @param  @return    设定文件   
+	 * @return PagingBean    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	PagingBean findByUserIdAndPage(String userId, Integer start, Integer limit);
 
 }
    

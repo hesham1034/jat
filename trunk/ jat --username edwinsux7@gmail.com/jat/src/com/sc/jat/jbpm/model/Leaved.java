@@ -18,14 +18,14 @@ import com.sc.jat.ss.model.Users;
 /**   
  * ClassName:Leave2   
  * Function: 请假实体类   
- *   
+ * 实例命名时注意关键字引起sql查询出错  
  * @author   sux   
  * @version  1.0, 2011-8-30   
  * @since    leave21.0   
  */
-@Entity(name="Leave")
-@Table(name="leave")
-public class Leave {
+@Entity(name="Leaved")
+@Table(name="leaved")
+public class Leaved {
 	private String id;
 	private Users users;
 	private Integer day;
@@ -46,7 +46,7 @@ public class Leave {
 	}
 	
 	@ManyToOne(targetEntity=Users.class)
-	@JoinColumn(name="user",referencedColumnName="id",insertable=true,updatable=true)
+	@JoinColumn(name="users",referencedColumnName="id",insertable=true,updatable=true)
 	public Users getUsers() {
 		return users;
 	}

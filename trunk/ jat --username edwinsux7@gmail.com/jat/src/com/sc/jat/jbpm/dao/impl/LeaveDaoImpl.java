@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.sc.jat.jbpm.dao.LeaveDao;
-import com.sc.jat.jbpm.model.Leave;
+import com.sc.jat.jbpm.model.Leaved;
 import com.scommon.dao.BaseDao;
 import com.scommon.exception.SaveException;
+import com.scommon.util.PagingBean;
 
 /**   
  * ClassName:LeaveDaoImpl   
@@ -18,24 +19,28 @@ import com.scommon.exception.SaveException;
  * @since    leave21.0   
  */
 @Repository("leaveDao")
-public class LeaveDaoImpl extends BaseDao<Leave>implements LeaveDao{
+public class LeaveDaoImpl extends BaseDao<Leaved>implements LeaveDao{
 
-	public List<Leave> findByUserId(String userId) {
-		String hql = "from Leave where users.userId = ?";  
+	public List<Leaved> findByUserId(String userId) {
+		String hql = "from Leaved where users.id = ?";  
 		return super.findByHQLAndValue(hql, userId);   
 	}
 
-	public Leave findByLeaveId(String leaveId) {
+	public Leaved findByLeaveId(String leaveId) {
 		return super.get(leaveId);
 	}
 
-	public void save(Leave leave) throws SaveException{
+	public void save(Leaved leave) throws SaveException{
 		super.save(leave);
 	}
 
-	public void update(Leave leave) {
+	public void update(Leaved leave) {
 		super.update(leave);
 	}
 
+	public PagingBean findByUserIdAndPage(String userId, Integer start, Integer limit) {
+		String hql = "from Leaved where users.id = '"+userId+"'";  
+		return super.findStringByPage(hql, start, limit);   
+	}
 }
    

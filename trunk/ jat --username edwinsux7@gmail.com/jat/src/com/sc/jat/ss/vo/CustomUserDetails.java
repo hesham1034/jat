@@ -18,6 +18,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class CustomUserDetails implements UserDetails {
 
 	private Collection<GrantedAuthority> authorities;
+	/**
+	 * 用户id，在UserDetialManager中进行赋值
+	 */
+	private String id; 
 	private String password;
 	private String username;
 	private boolean accountNonExpired;
@@ -25,8 +29,9 @@ public class CustomUserDetails implements UserDetails {
 	private boolean credentialsNonExpired;
 	private boolean enabled;
 
-	public CustomUserDetails(String password, String username, boolean accountNonExpired, boolean accountNonLocked,
+	public CustomUserDetails(String id, String password, String username, boolean accountNonExpired, boolean accountNonLocked,
 			boolean credentialsNonExpired, boolean enabled, List<GrantedAuthority> gAuthoritys) {
+		this.id = id;
 		this.password = password;
 		this.username = username;
 		this.accountNonExpired = accountNonExpired;
@@ -62,5 +67,13 @@ public class CustomUserDetails implements UserDetails {
 
 	public boolean isEnabled() {
 		return this.enabled;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

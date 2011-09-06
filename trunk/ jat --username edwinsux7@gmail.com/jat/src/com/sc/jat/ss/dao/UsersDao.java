@@ -36,7 +36,7 @@ public interface UsersDao {
 	 * @throws    
 	 * @since  jat1.0
 	 */
-	String findByPage(Integer start, Integer limit);
+	PagingBean findByPage(Integer start, Integer limit);
 
 }
    

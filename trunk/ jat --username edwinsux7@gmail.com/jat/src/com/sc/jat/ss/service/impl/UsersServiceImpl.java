@@ -8,16 +8,17 @@
   
 package com.sc.jat.ss.service.impl;   
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
 import com.sc.jat.ss.dao.UsersDao;
 import com.sc.jat.ss.service.UsersService;
-import com.scommon.util.PagingBean;
 
 /**   
  * ClassName:UserServiceImpl   
@@ -34,7 +35,8 @@ public class UsersServiceImpl implements UsersService{
 	private UsersDao usersDao;
 	
 	public String getByPage(Integer start, Integer limit) {
-		return usersDao.findByPage(start, limit);   
+		String users = JSONObject.fromObject(usersDao.findByPage(start, limit)).toString();
+		return users;
 	}
 	
 	public UsersDao getUsersDao() {
