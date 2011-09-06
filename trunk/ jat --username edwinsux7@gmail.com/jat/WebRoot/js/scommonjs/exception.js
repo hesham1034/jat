@@ -76,12 +76,20 @@
 /**
  * 请求完成后根据返回信息处理异常
  * 还可对requestexception根据返回的状态进行处理
+ * 注意：在菜单中点击节点时进行了ajax查询，返回的并不是json数据而是请求的jsp页面，这就导致每次
+ * 点击菜单时出问题。当传入的json格式不正确将报错，故进行异常捕获。
  * @param {Object} conn
  * @param {Object} response
  * @param {Object} options
  */
 Ext.Ajax.on('requestcomplete',function(conn, response, options){
-	var data = Ext.util.JSON.decode(response.responseText);
+	//console.log(response.responseText);
+	var data;
+	try{
+		data = Ext.util.JSON.decode(response.responseText); //转为js对象
+	}catch(e){
+		console.log(e.message);
+	}
 	if(null != data && data.exception == true){
 		Ext.Msg.alert("系统异常",data.msg);
 	}
