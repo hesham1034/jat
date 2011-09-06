@@ -2,7 +2,7 @@ package com.sc.jat.jbpm.service;
 
 import java.util.List;
 
-import com.sc.jat.jbpm.model.Leave;
+import com.sc.jat.jbpm.model.Leaved;
 import com.scommon.exception.SaveException;
 
 /**   
@@ -49,7 +49,7 @@ public interface LeaveService {
 	 */
 	public String getTasks(String loginName);
 
-	public void save(Leave leave) throws SaveException;
+	public void save(Leaved leave) throws SaveException;
 	/**
 	 * 
 	 * applyLeave:申请请假
@@ -80,5 +80,31 @@ public interface LeaveService {
 	 * @since  leave21.0
 	 */
 	public void disagree(String taskId);
+	/**
+	 * 
+	 * getLeaves:请假列表分页
+	 *   
+	 * @param  @param id
+	 * @param  @param start
+	 * @param  @param limit
+	 * @param  @return    设定文件   
+	 * @return String    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public String getLeaves(String userId, Integer start, Integer limit);
+	/**
+	 * 
+	 * getTasks:任务列表分页
+	 *   
+	 * @param  @param username
+	 * @param  @param start
+	 * @param  @param limit
+	 * @param  @return    设定文件   
+	 * @return String    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public String getTasks(String username, Integer start, Integer limit);
 }
    

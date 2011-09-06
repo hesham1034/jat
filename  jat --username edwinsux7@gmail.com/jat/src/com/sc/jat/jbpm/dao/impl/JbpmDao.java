@@ -12,9 +12,12 @@ import org.jbpm.api.ManagementService;
 import org.jbpm.api.ProcessEngine;
 import org.jbpm.api.ProcessInstance;
 import org.jbpm.api.RepositoryService;
+import org.jbpm.api.TaskQuery;
 import org.jbpm.api.TaskService;
 import org.jbpm.api.task.Task;
 import org.springframework.stereotype.Repository;
+
+import com.scommon.util.PagingBean;
 
 /**   
  * ClassName:JbpmDao   
@@ -145,6 +148,29 @@ public class JbpmDao {
 		this.historyService = processEngine.getHistoryService();
 		this.managementService = processEngine.getManagementService();
 		this.identityService = processEngine.getIdentityService();
+	}
+
+	/**
+	 * 
+	 * findByUserName:分页查询任务列表   
+	 *   
+	 * @param  @param username
+	 * @param  @param start
+	 * @param  @param limit
+	 * @param  @return    设定文件   
+	 * @return PagingBean    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public PagingBean findByUserName(String username, Integer start, Integer limit) {
+		TaskQuery query = taskService.createTaskQuery();
+		query.assignee(username);
+		query.orderDesc(TaskQuery.PROPERTY_PRIORITY);
+		int total = (int) query.count();
+		List<Task> tasks = query.page(start, limit).list();
+		PagingBean taskBean = new PagingBean(total, tasks);
+		return taskBean;   
+		
 	}
 
 }
