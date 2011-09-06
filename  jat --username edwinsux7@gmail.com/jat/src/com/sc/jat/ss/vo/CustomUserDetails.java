@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.sc.jat.ss.model.Users;
+
 /**   
  * ClassName:UserDetails   
  * Function:创建UserDetails的实现类，本质为用户详细信息的一个载体 
@@ -28,9 +30,10 @@ public class CustomUserDetails implements UserDetails {
 	private boolean accountNonLocked;
 	private boolean credentialsNonExpired;
 	private boolean enabled;
+	private Users user;
 
 	public CustomUserDetails(String id, String password, String username, boolean accountNonExpired, boolean accountNonLocked,
-			boolean credentialsNonExpired, boolean enabled, List<GrantedAuthority> gAuthoritys) {
+			boolean credentialsNonExpired, boolean enabled, List<GrantedAuthority> gAuthoritys, Users user) {
 		this.id = id;
 		this.password = password;
 		this.username = username;
@@ -39,6 +42,7 @@ public class CustomUserDetails implements UserDetails {
 		this.credentialsNonExpired = credentialsNonExpired;
 		this.enabled = enabled;
 		this.authorities = gAuthoritys;
+		this.user = user;
 	}
 
 	public Collection<GrantedAuthority> getAuthorities() {
@@ -73,7 +77,8 @@ public class CustomUserDetails implements UserDetails {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public Users getUser() {
+		return user;
 	}
+
 }

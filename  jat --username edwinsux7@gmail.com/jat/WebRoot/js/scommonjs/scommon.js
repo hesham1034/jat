@@ -1,8 +1,16 @@
 Ext.namespace("scommon");
 
-scommon.failure = function(){
-	Ext.Msg.alert('提示','后台出现异常');
-}
+/**
+ * Form提交时的Failure处理,若后台业务处理产生异常则输出错误信息，其它则输出超时提示
+ */
+scommon.failure = function(form, action){
+	try{
+		Ext.Msg.alert('系统异常',action.result.msg);
+	}catch(e){
+		Ext.Msg.alert('提示','连接超时');
+	}
+};
+
 /**
  * 获取项目路径
  * @return {TypeName} 

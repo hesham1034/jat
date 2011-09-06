@@ -29,10 +29,12 @@ public class Leaved {
 	private String id;
 	private Users users;
 	private Integer day;
-	private String applyTime;
+	private Long applyTime;
 	private Integer status;
 	private String content;
 	private String taskId;
+	private Long startTime;
+	private Long endTime;
 	
 	@Id
 	@GenericGenerator(name = "system-uuid", strategy = "com.scommon.util.UUIDGenerator")
@@ -63,10 +65,10 @@ public class Leaved {
 	}
 	@Basic(optional=false)
 	@Column(name="apply_time",insertable=true,updatable=true,length=30)
-	public String getApplyTime() {
+	public Long getApplyTime() {
 		return applyTime;
 	}
-	public void setApplyTime(String applyTime) {
+	public void setApplyTime(Long applyTime) {
 		this.applyTime = applyTime;
 	}
 	@Basic(optional=true)
@@ -91,6 +93,20 @@ public class Leaved {
 	}
 	public void setTaskId(String taskId) {
 		this.taskId = taskId;
+	}
+	@Column(name="start_time", insertable=true, updatable=true)
+	public Long getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Long startTime) {
+		this.startTime = startTime;
+	}
+	@Column(name="end_time", insertable=true, updatable=true)
+	public Long getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Long endTime) {
+		this.endTime = endTime;
 	}
 }
    

@@ -31,6 +31,8 @@ public class LeaveAction extends BaseAction{
 	private String taskId;
 	private Integer start;
 	private Integer limit;
+	private String startTime;
+	private String endTime;
 	
 	
 	/**
@@ -88,25 +90,16 @@ public class LeaveAction extends BaseAction{
 	 * @throws    
 	 * @since  leave21.0
 	 */
-	public String save(){
-		String datetime = DateTimeUtils.getStringDate("yyyy-MM-dd");
-		leave.setApplyTime(datetime);
+	public void save() throws SaveException, Exception{
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
+		.getAuthentication().getPrincipal();
+		leave.setStartTime(DateTimeUtils.convertDateStringToLong(startTime, null));
+		leave.setEndTime(DateTimeUtils.convertDateStringToLong(endTime, null));
+		leave.setApplyTime(System.currentTimeMillis());
 		leave.setStatus(0);
-		Users user = (Users) getSession().getAttribute("user");
-		if(null == user){
-			return LOGIN;
-		}
-		leave.setUsers(user);
-		try{
-			leaveService.save(leave);
-		}catch(SaveException e){
-			this.addActionError("save leave is failed...");
-			e.printStackTrace();
-			return ERROR;
-		}
-		//String leaves = leaveService.getLeaves(user.getId());
-		//String tasks = leaveService.getTasks(user.getUsername());
-		return "leaveList";
+		leave.setUsers(userDetails.getUser());
+		leaveService.save(leave);
+		this.outForSuccess("保存成功");
 	}
 	/**
 	 * 
@@ -188,6 +181,22 @@ public class LeaveAction extends BaseAction{
 
 	public void setLimit(Integer limit) {
 		this.limit = limit;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 }
    
