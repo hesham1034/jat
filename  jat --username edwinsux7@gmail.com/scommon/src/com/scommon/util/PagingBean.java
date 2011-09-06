@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class PagingBean {
 	private Integer totalProperty;
-	/**
-	 * 不能传入集合再转为json，因为要求root为一Json对象而不是数组
-	 */
-	private String root;
+	private List<?> root;
 	
-	public PagingBean(Integer totalProperty, String root){
+	public PagingBean(){
+		
+	}
+	public PagingBean(Integer totalProperty, List<?>  root){
 		this.totalProperty = totalProperty;
 		this.root = root;
 	}
@@ -38,10 +38,10 @@ public class PagingBean {
 	public void setTotalProperty(Integer totalProperty) {
 		this.totalProperty = totalProperty;
 	}
-	public String getRoot() {
+	public List<?>  getRoot() {
 		return root;
 	}
-	public void setRoot(String root) {
+	public void setRoot(List<?>  root) {
 		this.root = root;
 	}
 }

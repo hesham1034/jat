@@ -19,6 +19,7 @@ import org.springframework.util.Assert;
 
 import com.scommon.exception.SaveException;
 import com.scommon.exception.UpdateException;
+import com.scommon.util.PagingBean;
 
 public class BaseDao<T> extends HibernateBaseDao<T> {
 	/**
@@ -372,10 +373,10 @@ public class BaseDao<T> extends HibernateBaseDao<T> {
 	 * @throws    
 	 * @since  scommon1.0
 	 */
-	public String findStringByPage(String hql, int start, int limit){
-		String root = JSONArray.fromObject(findByPage(hql, start, limit)).toString();
+	public PagingBean findStringByPage(String hql, int start, int limit){
+		List<T> root = findByPage(hql, start, limit);
 		int totalProperty = findTotal();
-		return "{totalProperty:" + totalProperty + ",root:" + root + "}";
+		return new PagingBean(totalProperty, root);
 	}
 	/**
 	 * 
