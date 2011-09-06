@@ -5,6 +5,8 @@ jat.jbpm.leaveList.LeaveTaskPanel = Ext.extend(Ext.Panel, {
 		var _leavePanel = new jat.jbpm.leaveList.LeavePanel();
 		var _taskPanel = new jat.jbpm.leaveList.TaskPanel();
 		jat.jbpm.leaveList.LeaveTaskPanel.superclass.constructor.call(this, {
+			width: Ext.getCmp('mainTab').getActiveTab().getInnerWidth(),
+			height: Ext.getCmp('mainTab').getActiveTab().getInnerHeight(),
 			items: [_leavePanel, _taskPanel]
 		});
 	}
@@ -27,7 +29,7 @@ jat.jbpm.leaveList.LeavePanel = Ext.extend(Ext.Panel, {
  * 请假查询面板
  */
 jat.jbpm.leaveList.LeaveQueryForm = Ext.extend(Ext.form.FormPanel, {
-	height: '100%',
+	height: 30,
 	width: '100%',
 	constructor: function(){
 		jat.jbpm.leaveList.LeaveQueryForm.superclass.constructor.call(this, {
@@ -121,8 +123,14 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	handler: ''
 		    }]
 		});
-		var _paging = new jat.scommon.gridUtils.PagingToolbar(_leaveStore, 20);
+		var _paging = new jat.scommon.gridUtils.PagingToolbar("leaveListPage", _leaveStore, 20);
 		jat.jbpm.leaveList.LeaveGrid.superclass.constructor.call(this,{
+			monitorResize: true, 
+			doLayout: function() { 
+				this.setWidth(document.body.clientWidth-205);
+				this.setHeight((document.body.clientHeight-270)/2);
+				Ext.grid.GridPanel.prototype.doLayout.call(this); 
+			}, 
 			border: false,
 			sm: _sm,
 			cm: _cm,
@@ -182,7 +190,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	align: 'center'
 		    }
 		]);
-		var _leaveStore = new Ext.data.JsonStore({
+		var _taskStore = new Ext.data.JsonStore({
 			url: 'leave_listTask.action',
 			Field: ['day','content','status','applyTime']
 		});
@@ -197,16 +205,22 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	handler: ''
 		    }]
 		});
-		var _paging = new jat.scommon.gridUtils.PagingToolbar(_leaveStore, 20);
+		var _paging = new jat.scommon.gridUtils.PagingToolbar("taskListPage", _taskStore, 20);
 		jat.jbpm.leaveList.TaskGrid.superclass.constructor.call(this,{
+			monitorResize: true, 
+			doLayout: function() { 
+				this.setWidth(document.body.clientWidth-205);
+				this.setHeight((document.body.clientHeight-270)/2);
+				Ext.grid.GridPanel.prototype.doLayout.call(this); 
+			},
 			border: false,
 			sm: _sm,
 			cm: _cm,
-			store: _leaveStore,
+			store: _taskStore,
 			tbar: _tbar,
 			bbar: _paging
 		});
-		_leaveStore.load({
+		_taskStore.load({
 			params: {
 				start: 0,
 				limit: 20

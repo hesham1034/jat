@@ -46,10 +46,11 @@ if(ids != null && ids != ""){
  * @memberOf {TypeName} 
  */
 jat.scommon.gridUtils.PagingToolbar = Ext.extend(Ext.PagingToolbar, {
-	constructor: function(store, pageSize){
+	constructor: function(_id, _store, _pageSize){
 		jat.scommon.gridUtils.PagingToolbar.superclass.constructor.call(this, {
-			store: store,
-			pageSize: pageSize, //页面大小 
+			id: _id,
+			store: _store,
+			pageSize: _pageSize, //页面大小 
 			displayInfo: true,
 			displayMsg : '共<font color="red"> {2} </font>条记录,当前页记录索引<font color="red"> {0} - {1}</font>&nbsp;&nbsp;&nbsp;',
 			emptyMsg: '没有数据',
