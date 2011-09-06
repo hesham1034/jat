@@ -4,6 +4,7 @@ package com.sc.jat.jbpm.dao;
 import java.util.List;
 
 import com.sc.jat.jbpm.model.Leaved;
+import com.scommon.exception.SaveException;
 import com.scommon.util.PagingBean;
 
 /**   
@@ -20,7 +21,7 @@ public interface LeaveDao {
 
 	Leaved findByLeaveId(String leaveId);
 
-	void save(Leaved leave);
+	void save(Leaved leave) throws SaveException;
 
 	void update(Leaved leave);
 	/**

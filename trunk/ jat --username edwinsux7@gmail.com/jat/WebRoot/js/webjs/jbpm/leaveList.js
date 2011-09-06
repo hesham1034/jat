@@ -5,8 +5,6 @@ jat.jbpm.leaveList.LeaveTaskPanel = Ext.extend(Ext.Panel, {
 		var _leavePanel = new jat.jbpm.leaveList.LeavePanel();
 		var _taskPanel = new jat.jbpm.leaveList.TaskPanel();
 		jat.jbpm.leaveList.LeaveTaskPanel.superclass.constructor.call(this, {
-			width: Ext.getCmp('mainTab').getActiveTab().getInnerWidth(),
-			height: Ext.getCmp('mainTab').getActiveTab().getInnerHeight(),
 			items: [_leavePanel, _taskPanel]
 		});
 	}
@@ -44,18 +42,18 @@ jat.jbpm.leaveList.LeaveQueryForm = Ext.extend(Ext.form.FormPanel, {
 			items: [{
 				layout: 'form',
 				items: [{
-					xtype: 'datefield',
+					xtype:'datetimefield',  
+					format:'H:i',  
 					fieldLabel: '查询日期',
-					format: 'Y-m-d',
-					width: 100
+					width: 150
 				}]
 			},{
 				layout: 'form',
 				items: [{
-					xtype: 'datefield',
+					xtype:'datetimefield',  
+					format:'H:i',  
 					fieldLabel: '至',
-					format: 'Y-m-d',
-					width: 100
+					width: 150
 				}]
 			},{
 				layout: 'form',
@@ -112,7 +110,7 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 			items: [{
 		    	text: '添加',
 		    	iconCls: '',
-		    	handler: ''
+		    	handler: jat.jbpm.leaveList.leaveAddFn
 		    },{
 		    	text: '申请',
 		    	iconCls: '',
@@ -228,3 +226,12 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		});
 	}
 });
+
+/*********************处理理函数******************************/
+/**
+ * 请假信息添加
+ */
+jat.jbpm.leaveList.leaveAddFn = function(){
+	var leaveWin = new jat.jbpm.leaveForm.LeaveWin();
+	leaveWin.show();
+}

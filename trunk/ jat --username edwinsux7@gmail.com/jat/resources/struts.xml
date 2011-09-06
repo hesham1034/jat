@@ -5,7 +5,7 @@
 	<constant name="struts.devMode" value="true"/>
 	<constant name="struts.custom.i18n.resources" value="i18nResources"/>
 	
-	<package name="default" extends="struts-default" namespace="/">
+	<package name="jat-default" extends="struts-default" namespace="/">
 		<!-- 异常处理start -->
 		<global-results>
 			<result name="saveException" type="redirectAction">exception_saveException</result>
@@ -25,11 +25,6 @@
 		
 		<action name="exception_*" class="exceptionAction" method="{1}"></action>
 		<!-- 异常处理end -->
-		
-		<action name="exception" class="exceptionAction" ></action>
-		<action name="*">
-			<result>{1}.jsp</result>
-		</action>
 	</package>
 	<include file="struts-*.xml"/>
 </struts>    

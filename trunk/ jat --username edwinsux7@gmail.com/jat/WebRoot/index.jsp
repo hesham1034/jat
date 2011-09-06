@@ -12,7 +12,13 @@
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!-- css -->
+	<!--设置时间扩展控件中'时间'二字的大小-->
+	<style type="text/css">
+		.x-date-bottom{
+			font-size: 12px;
+		}
+	</style>
+	<!-- css <link rel="stylesheet" type="text/css" href="<%=basePath%>js/extjs/Spinner.css">-->
 	<!-- ExtJs3.2基本配置 -->
 	<link rel="stylesheet" type="text/css" href="<%=basePath%>js/extjs/resources/css/ext-all.css">
 	<script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.6.min.js"></script>
@@ -26,6 +32,10 @@
 	<!-- ExtJs插件 -->
 	<script type="text/javascript" src="<%=basePath%>js/extjs/plugins/SearchField.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/extjs/plugins/TabCloseMenu.js"></script>
+	<!-- ExtJs中Date控件的扩展 -->
+	<script type="text/javascript" src="<%=basePath%>js/extjs/Spinner.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/extjs/SpinnerField.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/extjs/DateTimeField.js"></script>
 	<!-- 主页 -->
 	<script type="text/javascript" src="<%=basePath%>js/webjs/main.js"></script>
 	<!-- jbpm应用 -->
