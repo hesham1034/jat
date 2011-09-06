@@ -78,6 +78,8 @@
  * 还可对requestexception根据返回的状态进行处理
  * 注意：在菜单中点击节点时进行了ajax查询，返回的并不是json数据而是请求的jsp页面，这就导致每次
  * 点击菜单时出问题。当传入的json格式不正确将报错，故进行异常捕获。
+ * 当Form或Ajax提交时都在其Failure函数中，提取后台错误信息，
+ * 对于其它的请求当后台出现异常时从这里发出提示信息。(如加载表格数据等)
  * @param {Object} conn
  * @param {Object} response
  * @param {Object} options
@@ -88,7 +90,7 @@ Ext.Ajax.on('requestcomplete',function(conn, response, options){
 	try{
 		data = Ext.util.JSON.decode(response.responseText); //转为js对象
 	}catch(e){
-		console.log(e.message);
+		console.log("返回的JSON格不正确："+e.message);
 	}
 	if(null != data && data.exception == true){
 		Ext.Msg.alert("系统异常",data.msg);
