@@ -10,6 +10,23 @@ scommon.failure = function(form, action){
 		Ext.Msg.alert('提示','连接超时');
 	}
 };
+/**
+ * Ajax提交时Failure处理
+ */
+scommon.ajax.failure = function(response, options){
+	var data;
+	try{
+		data = Ext.util.JSON.decode(response.responseText); //转为js对象
+	}catch(e){
+		console.log("返回的JSON格不正确："+e.message);
+		Ext.Msg.alert('提示','连接超时');
+	}
+	if(null != data && data.exception == true){
+		Ext.Msg.alert("系统异常",data.msg);
+	}else{
+		Ext.Msg.alert('提示','连接超时');
+	}
+};
 
 /**
  * 获取项目路径
