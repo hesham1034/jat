@@ -72,7 +72,14 @@ public class LeaveServiceImpl implements LeaveService{
 			leaves.add(leave);
 		}
 		taskBean.setRoot(leaves);
-		return JSONArray.fromObject(taskBean).toString();   
+		Set<String> props = new HashSet<String>();
+		props.add("applyTime");
+		props.add("startTime");
+		props.add("endTime");
+		Set<String> fprops = new HashSet<String>();
+		fprops.add("addTime");
+		//fprops.add("role");
+		return JsonUtils.getJsonAndConvertFilter(taskBean, props, Long.class, CommonStaticValues.SYS_DATE_FORMAT, fprops);
 	}
 	
 	public void save(Leaved leave) throws SaveException{
@@ -80,6 +87,7 @@ public class LeaveServiceImpl implements LeaveService{
 	}
 	
 	public void applyLeave(String leaveId, String position) {
+		updateApplyTime(leaveId);
 		Map<String, Object> map = new HashMap<String, Object>();
 		//当非职员登录时从变量集合中获取leaveId，即查询出属于自己的任务
 		map.put("leaveId", leaveId);
@@ -153,6 +161,21 @@ public class LeaveServiceImpl implements LeaveService{
 	public String getLeaves(String userId) {
 		List<Leaved> leaves = leaveDao.findByUserId(userId);
 		return JSONArray.fromObject(leaves).toString();
+	}
+	
+	/**
+	 * 
+	 * updateApplyTime:添加申请时间 
+	 *   
+	 * @param  @param leaveId    设定文件   
+	 * @return void    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public void updateApplyTime(String leaveId){
+		Leaved leave = leaveDao.getById(leaveId);
+		leave.setApplyTime(System.currentTimeMillis());
+		leaveDao.update(leave);
 	}
 	
 	public JbpmDao getJbpmDao() {

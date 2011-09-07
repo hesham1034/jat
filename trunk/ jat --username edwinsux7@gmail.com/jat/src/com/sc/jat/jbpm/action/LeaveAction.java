@@ -58,7 +58,7 @@ public class LeaveAction extends BaseAction{
 	 * @throws    
 	 * @since  leave21.0
 	 */
-	public void listLeave(){
+	public void listLeave() throws Exception{
 		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
 	    .getAuthentication()
 	    .getPrincipal();
@@ -74,7 +74,7 @@ public class LeaveAction extends BaseAction{
 	 * @throws    
 	 * @since  jat1.0
 	 */
-	public void listTask(){
+	public void listTask() throws Exception{
 		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
 		.getAuthentication().getPrincipal();
 		String tasks = leaveService.getTasks(userDetails.getUsername(), start, limit);
