@@ -42,6 +42,7 @@
 	<!-- jbpm应用 -->
 	<script type="text/javascript" src="<%=basePath%>js/webjs/jbpm/leaveList.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/webjs/jbpm/leaveForm.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/webjs/jbpm/leaveFormView.js"></script>
 	<!-- 权限管理SpringSecurity应用 -->
 	<script type="text/javascript" src="<%=basePath%>js/webjs/authority/userList.js"></script>
 	<script type="text/javascript">

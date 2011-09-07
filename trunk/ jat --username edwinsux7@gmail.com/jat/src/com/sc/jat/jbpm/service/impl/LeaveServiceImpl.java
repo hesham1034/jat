@@ -112,14 +112,15 @@ public class LeaveServiceImpl implements LeaveService{
 		leaveDao.update(leave);
 	}
 	
-	public void agree(String taskId) {
+	public void agree(String taskId, String auditContent) {
 		String leaveId = (String) jbpmDao.findByTaskIdAndProperty(taskId, "leaveId");
 		Leaved leave = leaveDao.findByLeaveId(leaveId);
 		Task task = jbpmDao.findByTaskId(taskId);
 		String assignee = task.getAssignee();
 		if("sux".equals(assignee)){
 			jbpmDao.completeTask(taskId, "老板批准");
-			leave.setStatus(TypeStaticValues.LEAVE_STATUS_AGREEBYBOSS);//审核通过 
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_AGREEBYBOSS);//审核通过
+			leave.setAuditContent(auditContent);
 			leaveDao.update(leave);
 			return;
 		}
@@ -129,11 +130,12 @@ public class LeaveServiceImpl implements LeaveService{
 		}else{
 			jbpmDao.completeTask(taskId, "经理批准");
 			leave.setStatus(TypeStaticValues.LEAVE_STATUS_AGREEBYMANAGER);//通过
+			leave.setAuditContent(auditContent);
 			leaveDao.update(leave);
 		}
 	}
 	
-	public void disagree(String taskId){
+	public void disagree(String taskId, String auditContent){
 		String leaveId = (String) jbpmDao.findByTaskIdAndProperty(taskId, "leaveId");
 		Leaved leave = leaveDao.findByLeaveId(leaveId);
 		Task task = jbpmDao.findByTaskId(taskId);
@@ -145,6 +147,7 @@ public class LeaveServiceImpl implements LeaveService{
 			jbpmDao.completeTask(taskId, "经理不批准");
 			leave.setStatus(TypeStaticValues.LEAVE_STATUS_DISAGREEBYMANAGER);//不通过
 		}
+		leave.setAuditContent(auditContent);
 		leaveDao.update(leave);
 	}
 	
@@ -163,6 +166,27 @@ public class LeaveServiceImpl implements LeaveService{
 	public String getLeaves(String userId) {
 		List<Leaved> leaves = leaveDao.findByUserId(userId);
 		return JSONArray.fromObject(leaves).toString();
+	}
+	
+	public String getById(String leaveId) {
+		Leaved leave = leaveDao.findByLeaveId(leaveId);
+		Set<String> props = new HashSet<String>();
+		props.add("applyTime");
+		props.add("startTime");
+		props.add("endTime");
+		Set<String> fprops = new HashSet<String>();
+		fprops.add("addTime");
+		fprops.add("role");
+		return JsonUtils.getJsonAndConvertFilter(leave, props, Long.class, CommonStaticValues.SYS_DATE_FORMAT, fprops);
+	}
+	
+	public void updateLeaveStatus(String taskId, Leaved leave) {
+		if(leave.getStatus() == 0){
+			this.agree(taskId, leave.getAuditContent());
+		}
+		if(leave.getStatus() == 1){
+			this.disagree(taskId, leave.getAuditContent());
+		}
 	}
 	
 	/**
@@ -195,5 +219,6 @@ public class LeaveServiceImpl implements LeaveService{
 	public void setLeaveDao(LeaveDao leaveDao) {
 		this.leaveDao = leaveDao;
 	}
+
 }
    

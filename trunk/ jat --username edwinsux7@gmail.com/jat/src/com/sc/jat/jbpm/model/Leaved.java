@@ -36,6 +36,7 @@ public class Leaved {
 	private Long startTime;
 	private Long endTime;
 	private Long addTime;
+	private String auditContent;
 	
 	@Id
 	@GenericGenerator(name = "system-uuid", strategy = "com.scommon.util.UUIDGenerator")
@@ -81,7 +82,7 @@ public class Leaved {
 		this.status = status;
 	}
 	@Basic(optional=false)
-	@Column(name="content",insertable=true,updatable=true,length=1000)
+	@Column(name="content",insertable=true,updatable=true,length=200)
 	public String getContent() {
 		return content;
 	}
@@ -115,6 +116,13 @@ public class Leaved {
 	}
 	public void setAddTime(Long addTime) {
 		this.addTime = addTime;
+	}
+	@Column(name="audit_content",insertable=true,updatable=true,length=200)
+	public String getAuditContent() {
+		return auditContent;
+	}
+	public void setAuditContent(String auditContent) {
+		this.auditContent = auditContent;
 	}
 }
    

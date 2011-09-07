@@ -238,14 +238,22 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	dataIndex: 'applyTime',
 		    	align: 'center'
 		    },{
+		    	header: '申请人',
+		    	dataIndex: 'users',
+		    	align: 'center',
+		    	renderer: function(_value){
+		    		return _value.username;
+		    	}
+		    },{
 		    	header: '操作',
 		    	dataIndex: 'taskId',
 		    	align: 'center',
 		    	renderer: function(_value,  _cellMeta, _record, _rowIndex, _columnIndex, _store){
 		    		var _str = '';
 		    		var _status = _record.data['status'];
+		    		var _id = _record.data['id'];
 		    		if(_status == 1 || _status == 2){
-		    			_str += '<a href="javascript:void(0)" onclick="jat.jbpm.leaveList.leaveAuditFn(\''+_value+'\')">审核</a>&nbsp;&nbsp;';
+		    			_str += '<a href="javascript:void(0)" onclick="jat.jbpm.leaveList.leaveAuditFn(\''+_value+'\', \''+_id+'\')">审核</a>&nbsp;&nbsp;';
 		    		}
 		    		_str += '<a href="javascript:void(0)">查看</a>';
 		    		return _str;
@@ -256,7 +264,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 			url: 'leave_listTask.action',
 			totalProperty: 'totalProperty',
 			root: 'root',
-			fields: ['day','content','status','applyTime', 'startTime', 'endTime', 'taskId']
+			fields: ['day','content','status','applyTime', 'startTime', 'endTime', 'taskId', 'id', 'users']
 		});
 		var _tbar = new Ext.Toolbar({
 			items: [{
@@ -332,8 +340,15 @@ jat.jbpm.leaveList.leaveSingleApplyFn = function(_id){
 /**
  * 审核
  */
-jat.jbpm.leaveList.leaveAuditFn = function(_taskId){
-	
+jat.jbpm.leaveList.leaveAuditFn = function(_taskId, _id){
+	var _leaveViewForm = new jat.jbpm.leaveFormView.LeaveFormViewWin(_taskId);
+	Ext.getCmp('leaveFormViewId').getForm().load({
+		url: 'leave_edit.action',
+		params: {
+			ids : _id
+		}
+	});
+	_leaveViewForm.show();
 };
 /**
  * 状态值判断返回
