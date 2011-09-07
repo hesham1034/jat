@@ -358,8 +358,8 @@ public class BaseDao<T> extends HibernateBaseDao<T> {
 	 * @throws    
 	 * @since  scommon1.0
 	 */
-	public<T> int findTotal(){
-		List<T> list = this.findAll();
+	public<T> int findTotal(String hql){
+		List<T> list = this.findByHQL(hql);
 		return list.size();
 	}
 	/**
@@ -375,7 +375,7 @@ public class BaseDao<T> extends HibernateBaseDao<T> {
 	 */
 	public PagingBean findStringByPage(String hql, int start, int limit){
 		List<T> root = findByPage(hql, start, limit);
-		int totalProperty = findTotal();
+		int totalProperty = findTotal(hql);
 		return new PagingBean(totalProperty, root);
 	}
 	/**
