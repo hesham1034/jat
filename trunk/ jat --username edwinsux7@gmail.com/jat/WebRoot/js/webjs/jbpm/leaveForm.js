@@ -3,7 +3,7 @@ Ext.namespace("jat.jbpm.leaveForm");
 jat.jbpm.leaveForm.LeaveWin = Ext.extend(Ext.Window,{
 	id: 'leaveWinId',
 	width: 300,
-	height: 300,
+	height: 280,
 	constructor: function(){
 		var _leaveForm = new jat.jbpm.leaveForm.LeaveForm();
 		jat.jbpm.leaveForm.LeaveWin.superclass.constructor.call(this, {
