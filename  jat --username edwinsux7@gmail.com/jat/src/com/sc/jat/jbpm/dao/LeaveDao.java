@@ -37,6 +37,17 @@ public interface LeaveDao {
 	 * @since  jat1.0
 	 */
 	PagingBean findByUserIdAndPage(String userId, Integer start, Integer limit);
+	/**
+	 * 
+	 * getById:按id取得leave   
+	 *   
+	 * @param  @param leaveId
+	 * @param  @return    设定文件   
+	 * @return Leaved    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	Leaved getById(String leaveId);
 
 }
    

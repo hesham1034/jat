@@ -220,7 +220,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	dataIndex: 'day',
 		    	align: 'center'
 		    },{
-		    	header: '事理',
+		    	header: '事由',
 		    	dataIndex: 'content',
 		    	align: 'center'
 		    },{
@@ -252,7 +252,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 			url: 'leave_listTask.action',
 			totalProperty: 'totalProperty',
 			root: 'root',
-			fields: ['day','content','status','applyTime']
+			fields: ['day','content','status','applyTime', 'startTime', 'endTime']
 		});
 		var _tbar = new Ext.Toolbar({
 			items: [{
@@ -267,6 +267,11 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		});
 		var _paging = new jat.scommon.gridUtils.PagingToolbar("taskListPage", _taskStore, 8);
 		jat.jbpm.leaveList.TaskGrid.superclass.constructor.call(this,{
+			//充满整行
+			viewConfig : {
+				forceFit : true
+			},
+			stripeRows : true, //行颜色交替效果
 			monitorResize: true, 
 			doLayout: function() { 
 				this.setWidth(document.body.clientWidth-205);
@@ -320,3 +325,5 @@ jat.jbpm.leaveList.leaveSingleApplyFn = function(_id){
 		failure: scommon.ajaxFailure
 	});
 };
+
+//http://code.google.com/p/quicklaud-rbac/

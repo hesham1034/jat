@@ -42,5 +42,9 @@ public class LeaveDaoImpl extends BaseDao<Leaved>implements LeaveDao{
 		String hql = "from Leaved where users.id = '"+userId+"'";  
 		return super.findStringByPage(hql, start, limit);   
 	}
+
+	public Leaved getById(String leaveId) {
+		return super.get(leaveId);   
+	}
 }
    
