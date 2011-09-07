@@ -95,7 +95,7 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	dataIndex: 'content',
 		    	align: 'center',
 		    	renderer: function(value){
-		    		return jat.scommon.gridUtils.QTip(value, 8);
+		    		return jat.scommon.gridUtils.QTip(value, 10);
 		    	}
 		    },{
 		    	header: '开始时间',
@@ -111,13 +111,7 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	header: '状态',
 		    	dataIndex: 'status',
 		    	align: 'center',
-		    	renderer: function(value){
-		    		if(value == 0){
-		    			return "未申请";
-		    		}else if(value == 1){
-		    			return "审核中";
-		    		}
-		    	}
+		    	renderer: jat.jbpm.leaveList.returnStatus
 		    },{
 		    	header: '填写时间',
 		    	dataIndex: 'addTime',
@@ -222,7 +216,10 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    },{
 		    	header: '事由',
 		    	dataIndex: 'content',
-		    	align: 'center'
+		    	align: 'center',
+		    	renderer: function(_value){
+		    		return jat.scommon.gridUtils.QTip(_value, 10);
+		    	}
 		    },{
 		    	header: '开始时间',
 		    	dataIndex: 'startTime',
@@ -235,24 +232,31 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	header: '状态',
 		    	dataIndex: 'status',
 		    	align: 'center',
-		    	renderer: function(value){
-		    		if(value == 0){
-		    			return "未申请";
-		    		}else if(value == 1){
-		    			return "审核中";
-		    		}
-		    	}
+		    	renderer: jat.jbpm.leaveList.returnStatus
 		    },{
 		    	header: '申请时间',
 		    	dataIndex: 'applyTime',
 		    	align: 'center'
+		    },{
+		    	header: '操作',
+		    	dataIndex: 'taskId',
+		    	align: 'center',
+		    	renderer: function(_value,  _cellMeta, _record, _rowIndex, _columnIndex, _store){
+		    		var _str = '';
+		    		var _status = _record.data['status'];
+		    		if(_status == 1 || _status == 2){
+		    			_str += '<a href="javascript:void(0)" onclick="jat.jbpm.leaveList.leaveAuditFn(\''+_value+'\')">审核</a>&nbsp;&nbsp;';
+		    		}
+		    		_str += '<a href="javascript:void(0)">查看</a>';
+		    		return _str;
+		    	}
 		    }
 		]);
 		var _taskStore = new Ext.data.JsonStore({
 			url: 'leave_listTask.action',
 			totalProperty: 'totalProperty',
 			root: 'root',
-			fields: ['day','content','status','applyTime', 'startTime', 'endTime']
+			fields: ['day','content','status','applyTime', 'startTime', 'endTime', 'taskId']
 		});
 		var _tbar = new Ext.Toolbar({
 			items: [{
@@ -325,5 +329,30 @@ jat.jbpm.leaveList.leaveSingleApplyFn = function(_id){
 		failure: scommon.ajaxFailure
 	});
 };
-
+/**
+ * 审核
+ */
+jat.jbpm.leaveList.leaveAuditFn = function(_taskId){
+	
+};
+/**
+ * 状态值判断返回
+ */
+jat.jbpm.leaveList.returnStatus =  function(value){
+	if(value == 0){
+		return "未申请";
+	}else if(value == 1){
+		return "待经理审核";
+	}else if(value == 2){
+		return "待老板审核";
+	}else if(value == 3){
+		return "经理审核通过";
+	}else if(value == 4){
+		return "老板审核通过";
+	}else if(value == 5){
+		return "经理驳回";
+	}else if(value == 6){
+		return "老板驳回";
+	}
+};
 //http://code.google.com/p/quicklaud-rbac/

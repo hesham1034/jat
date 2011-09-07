@@ -15,6 +15,7 @@ import org.jbpm.api.ProcessInstance;
 import org.jbpm.api.task.Task;
 import org.springframework.stereotype.Service;
 
+import com.sc.jat.enums.TypeStaticValues;
 import com.sc.jat.jbpm.dao.LeaveDao;
 import com.sc.jat.jbpm.dao.impl.JbpmDao;
 import com.sc.jat.jbpm.model.Leaved;
@@ -107,7 +108,7 @@ public class LeaveServiceImpl implements LeaveService{
 		
 		//修改请假信息状态
 		Leaved leave = leaveDao.findByLeaveId(leaveId);
-		leave.setStatus(1);//审核中
+		leave.setStatus(TypeStaticValues.LEAVE_STATUS_AUDITINGBYMANAGER);//待审核
 		leaveDao.update(leave);
 	}
 	
@@ -118,7 +119,7 @@ public class LeaveServiceImpl implements LeaveService{
 		String assignee = task.getAssignee();
 		if("sux".equals(assignee)){
 			jbpmDao.completeTask(taskId, "老板批准");
-			leave.setStatus(2);//审核通过 
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_AGREEBYBOSS);//审核通过 
 			leaveDao.update(leave);
 			return;
 		}
@@ -127,7 +128,7 @@ public class LeaveServiceImpl implements LeaveService{
 			jbpmDao.completeTask(taskId, "请假天数>5");
 		}else{
 			jbpmDao.completeTask(taskId, "经理批准");
-			leave.setStatus(2);//通过
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_AGREEBYMANAGER);//通过
 			leaveDao.update(leave);
 		}
 	}
@@ -139,10 +140,11 @@ public class LeaveServiceImpl implements LeaveService{
 		String assignee = task.getAssignee();
 		if("sux".equals(assignee)){
 			jbpmDao.completeTask(taskId, "老板不批准");
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_DISAGREEBYBOSS);//不通过
 		}else{
 			jbpmDao.completeTask(taskId, "经理不批准");
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_DISAGREEBYMANAGER);//不通过
 		}
-		leave.setStatus(3);//不通过
 		leaveDao.update(leave);
 	}
 	
