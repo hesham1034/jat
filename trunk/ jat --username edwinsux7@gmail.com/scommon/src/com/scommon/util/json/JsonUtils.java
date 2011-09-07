@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Set;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
 import net.sf.json.util.PropertyFilter;
@@ -23,12 +24,12 @@ public class JsonUtils {
 	 * @param props
 	 * @return json
 	 */
-	public String getJsonAndFilterPropertys(Object obj, Set<String> props){
-		JSONArray json = null;
+	public static String getJsonAndFilterPropertys(Object obj, Set<String> props){
+		JSONObject json = null;
 		try{
 		JsonConfig jsonConfig = new JsonConfig();
 		setJsonFilter(jsonConfig, props);
-		json = JSONArray.fromObject(obj, jsonConfig);}catch(Exception e){e.printStackTrace();}
+		json = JSONObject.fromObject(obj, jsonConfig);}catch(Exception e){e.printStackTrace();}
 		return json.toString();
 	}
 	
@@ -39,10 +40,10 @@ public class JsonUtils {
 	 * @param dateFormat
 	 * @return
 	 */
-	public <T> String getJsonAndConvertDateFormats(Object obj, Set<String> props, Class<T> typeClazz, String dateFormat){
+	public static <T> String getJsonAndConvertDateFormats(Object obj, Set<String> props, Class<T> typeClazz, String dateFormat){
 		JsonConfig jsonConfig = new JsonConfig();
-		setConvertDateFormat(jsonConfig, props, typeClazz, dateFormat);
-		JSONArray json = JSONArray.fromObject(obj, jsonConfig);
+		new JsonUtils().setConvertDateFormat(jsonConfig, props, typeClazz, dateFormat);
+		JSONObject json = JSONObject.fromObject(obj, jsonConfig);
 		return json.toString();
 	}
 	
@@ -56,11 +57,11 @@ public class JsonUtils {
 	 * @param fProps
 	 * @return
 	 */
-	public <T> String getJsonAndConvertFilter(Object obj, Set<String> cProps, Class<T> typeClazz, String dateFormat, Set<String> fProps){
+	public static <T> String getJsonAndConvertFilter(Object obj, Set<String> cProps, Class<T> typeClazz, String dateFormat, Set<String> fProps){
 		JsonConfig jsonConfig = new JsonConfig();
-		setConvertDateFormat(jsonConfig, cProps, typeClazz, dateFormat);
+		new JsonUtils().setConvertDateFormat(jsonConfig, cProps, typeClazz, dateFormat);
 		setJsonFilter(jsonConfig, fProps);
-		JSONArray json = JSONArray.fromObject(obj, jsonConfig);
+		JSONObject json = JSONObject.fromObject(obj, jsonConfig);
 		return json.toString();
 	}
 	
@@ -71,7 +72,7 @@ public class JsonUtils {
 	 * @param jsonConfig
 	 * @param props  need filter property collection
 	 */
-	public void setJsonFilter(JsonConfig jsonConfig, final Set<String> props){
+	public static void setJsonFilter(JsonConfig jsonConfig, final Set<String> props){
 		if(props.size() != 0 && null != props){
 			PropertyFilter filter = new PropertyFilter(){
 				@Override
