@@ -21,8 +21,7 @@
 	<!-- css <link rel="stylesheet" type="text/css" href="<%=basePath%>js/extjs/Spinner.css">-->
 	<!-- ExtJs3.2基本配置 -->
 	<link rel="stylesheet" type="text/css" href="<%=basePath%>js/extjs/resources/css/ext-all.css">
-	<script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.6.min.js"></script>
-	<script type="text/javascript" src="<%=basePath%>js/jquery/ext-jquery-adapter.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/extjs/ext-base.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/extjs/ext-all.js"></script>
 	<!-- 工具 -->
 	<script type="text/javascript" src="<%=basePath%>js/scommonjs/scommon.js"></script>

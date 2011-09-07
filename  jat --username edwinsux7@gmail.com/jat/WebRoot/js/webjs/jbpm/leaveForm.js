@@ -63,11 +63,11 @@ jat.jbpm.leaveForm.leaveSaveFn = function(){
 			Ext.Msg.confirm('提示',action.result.msg, function(button, text){
 				if(button == "yes"){
 					form.reset();
-					Ext.getCmp('leaveFormId').destroy();
+					Ext.getCmp('leaveWinId').destroy();
 					Ext.getCmp('leaveGridId').getStore().reload({
 						params: {
 							start: 0,
-							limit: 20
+							limit: 8
 						}
 					});
 				}
