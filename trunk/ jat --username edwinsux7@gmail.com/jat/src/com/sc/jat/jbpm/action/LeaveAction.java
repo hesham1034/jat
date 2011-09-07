@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import com.sc.jat.enums.TypeStaticValues;
 import com.sc.jat.jbpm.model.Leaved;
 import com.sc.jat.jbpm.service.LeaveService;
 import com.sc.jat.ss.model.Users;
@@ -27,13 +28,12 @@ import com.scommon.util.DateTimeUtils;
 public class LeaveAction extends BaseAction{
 	private LeaveService leaveService;
 	private Leaved leave;
-	private String leaveId;
 	private String taskId;
 	private Integer start;
 	private Integer limit;
 	private String startTime;
 	private String endTime;
-	
+	private String[] ids;
 	
 	/**
 	 * 
@@ -44,10 +44,9 @@ public class LeaveAction extends BaseAction{
 	 * @throws    
 	 * @since  leave21.0
 	 */
-	public String deploy(){
-		String path = "/com/sc/leave/jpbm/jpdl/leave.jpdl.xml";
+	public void deploy() throws Exception{
+		String path = "/leave.jpdl.xml";
 		leaveService.deploy(path);
-		return LOGIN;
 	}
 	
 	/**
@@ -95,8 +94,8 @@ public class LeaveAction extends BaseAction{
 		.getAuthentication().getPrincipal();
 		leave.setStartTime(DateTimeUtils.convertDateStringToLong(startTime, null));
 		leave.setEndTime(DateTimeUtils.convertDateStringToLong(endTime, null));
-		leave.setApplyTime(System.currentTimeMillis());
-		leave.setStatus(0);
+		leave.setAddTime(System.currentTimeMillis());
+		leave.setStatus(TypeStaticValues.LEAVE_STATUS_UNAPPLY);
 		leave.setUsers(userDetails.getUser());
 		leaveService.save(leave);
 		this.outForSuccess("保存成功");
@@ -107,13 +106,19 @@ public class LeaveAction extends BaseAction{
 	 *   
 	 * @param  @return    设定文件   
 	 * @return String    DOM对象   
+	 * @throws Exception 
 	 * @throws    
 	 * @since  leave21.0
 	 */
-	public String apply(){
-		Users user = (Users) getSession().getAttribute("user");
-		leaveService.applyLeave(leaveId, user.getPosition());
-		return "leaveList";
+	public void apply() throws Exception {
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
+		.getAuthentication().getPrincipal();
+		Users user = userDetails.getUser();
+		for(String id : ids){
+			deploy();
+			leaveService.applyLeave(id, user.getPosition());
+		}
+		this.outForSuccess("申请成功");
 	}
 	
 	/**
@@ -151,12 +156,12 @@ public class LeaveAction extends BaseAction{
 		this.leave = leave;
 	}
 
-	public String getLeaveId() {
-		return leaveId;
+	public String[] getIds() {
+		return ids;
 	}
 
-	public void setLeaveId(String leaveId) {
-		this.leaveId = leaveId;
+	public void setIds(String[] ids) {
+		this.ids = ids;
 	}
 
 	public String getTaskId() {

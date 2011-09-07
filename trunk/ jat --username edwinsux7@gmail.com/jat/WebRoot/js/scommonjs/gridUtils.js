@@ -32,9 +32,9 @@ if(ids != null && ids != ""){
 				params: {
 					ids: ids
 				}
-				})
+				});
 			}
-		})
+		});
 	}else{
 		Ext.Msg.alert("提示","请先选择",function(){});
 	}
@@ -59,6 +59,15 @@ jat.scommon.gridUtils.PagingToolbar = Ext.extend(Ext.PagingToolbar, {
 			prevText: '前一页',
 			nextText: '下一页',
 			lastText: '最后一页'
-		})
+		});
 	}
-})
+});
+
+/**
+ * 信息提示功能
+ * _value: 字符串
+ * _len: 显示的长度
+ */
+jat.scommon.gridUtils.QTip = function(_value, _len){
+	return "<span ext:qtip=" + _value + ">" + scommon.substring(_value, _len) + "</span>";
+};

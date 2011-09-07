@@ -13,7 +13,7 @@ scommon.failure = function(form, action){
 /**
  * Ajax提交时Failure处理
  */
-scommon.ajax.failure = function(response, options){
+scommon.ajaxFailure = function(response, options){
 	var data;
 	try{
 		data = Ext.util.JSON.decode(response.responseText); //转为js对象

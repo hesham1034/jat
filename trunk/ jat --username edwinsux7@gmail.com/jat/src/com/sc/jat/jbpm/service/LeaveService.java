@@ -20,10 +20,11 @@ public interface LeaveService {
 	 *   
 	 * @param  @param path    设定文件   
 	 * @return void    DOM对象   
+	 * @throws Exception 
 	 * @throws    
 	 * @since  leave21.0
 	 */
-	public void deploy(String path);
+	public void deploy(String path) throws Exception;
 	
 	/**
 	 * 

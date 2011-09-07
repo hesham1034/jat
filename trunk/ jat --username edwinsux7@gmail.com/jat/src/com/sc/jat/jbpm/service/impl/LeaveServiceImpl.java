@@ -2,13 +2,14 @@ package com.sc.jat.jbpm.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.jbpm.api.ProcessInstance;
 import org.jbpm.api.task.Task;
@@ -18,8 +19,10 @@ import com.sc.jat.jbpm.dao.LeaveDao;
 import com.sc.jat.jbpm.dao.impl.JbpmDao;
 import com.sc.jat.jbpm.model.Leaved;
 import com.sc.jat.jbpm.service.LeaveService;
+import com.scommon.emnus.CommonStaticValues;
 import com.scommon.exception.SaveException;
 import com.scommon.util.PagingBean;
+import com.scommon.util.json.JsonUtils;
 import com.sun.org.apache.commons.logging.Log;
 import com.sun.org.apache.commons.logging.LogFactory;
 
@@ -37,7 +40,7 @@ public class LeaveServiceImpl implements LeaveService{
 	private JbpmDao jbpmDao;
 	private LeaveDao leaveDao;
 
-	public void deploy(String path){
+	public void deploy(String path) throws Exception{
 		String version = jbpmDao.deploy(path);
 		log.info("发布新流程version:" + version);
 	}
@@ -136,8 +139,15 @@ public class LeaveServiceImpl implements LeaveService{
 	}
 	
 	public String getLeaves(String userId, Integer start, Integer limit) {
-		PagingBean pagingBean = leaveDao.findByUserIdAndPage(userId, start, limit);  
-		return JSONObject.fromObject(pagingBean).toString();   
+		PagingBean pagingBean = leaveDao.findByUserIdAndPage(userId, start, limit); 
+		Set<String> props = new HashSet<String>();
+		props.add("addTime");
+		props.add("startTime");
+		props.add("endTime");
+		Set<String> fprops = new HashSet<String>();
+		fprops.add("applyTime");
+		fprops.add("users");
+		return JsonUtils.getJsonAndConvertFilter(pagingBean, props, Long.class, CommonStaticValues.SYS_DATE_FORMAT, fprops);
 	}
 	
 	public String getLeaves(String userId) {

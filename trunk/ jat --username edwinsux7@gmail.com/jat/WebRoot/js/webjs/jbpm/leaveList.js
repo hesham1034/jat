@@ -2,6 +2,7 @@ Ext.namespace("jat.jbpm.leaveList");
 jat.jbpm.leaveList.LeaveTaskPanel = Ext.extend(Ext.Panel, {
 	id: 'leaveTaskPanelId',
 	constructor: function(){
+		Ext.QuickTips.init();
 		var _leavePanel = new jat.jbpm.leaveList.LeavePanel();
 		var _taskPanel = new jat.jbpm.leaveList.TaskPanel();
 		jat.jbpm.leaveList.LeaveTaskPanel.superclass.constructor.call(this, {
@@ -80,6 +81,7 @@ jat.jbpm.leaveList.LeaveQueryForm = Ext.extend(Ext.form.FormPanel, {
 jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 	id: 'leaveGridId',
 	constructor: function(){
+		Ext.QuickTips.init();
 		var _sm = new Ext.grid.CheckboxSelectionModel();
 		var _num = new Ext.grid.RowNumberer();
 		var _cm = new Ext.grid.ColumnModel([
@@ -91,38 +93,81 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		    },{
 		    	header: '事理',
 		    	dataIndex: 'content',
-		    	align: 'center'
+		    	align: 'center',
+		    	renderer: function(value){
+		    		return jat.scommon.gridUtils.QTip(value, 8);
+		    	}
+		    },{
+		    	header: '开始时间',
+		    	dataIndex: 'startTime',
+		    	align: 'center',
+		    	width: 150
+		    },{
+		    	header: '结束时间',
+		    	dataIndex: 'endTime',
+		    	align: 'center',
+		    	width: 150
 		    },{
 		    	header: '状态',
 		    	dataIndex: 'status',
-		    	align: 'center'
+		    	align: 'center',
+		    	renderer: function(value){
+		    		if(value == 0){
+		    			return "未申请";
+		    		}else if(value == 1){
+		    			return "审核中";
+		    		}
+		    	}
 		    },{
-		    	header: '申请时间',
-		    	dataIndex: 'applyTime',
-		    	align: 'center'
+		    	header: '填写时间',
+		    	dataIndex: 'addTime',
+		    	align: 'center',
+		    	width: 150
+		    },{
+		    	header: '操作',
+		    	dataIndex: 'id',
+		    	align: 'center',
+		    	renderer: function(_value,  _cellMeta, _record, _rowIndex, _columnIndex, _store){
+		    		var _status = _record.data['status'];
+		    		var _str = '';
+		    		if(_status == 0){
+		    			_str += '<a href="javascript:void(0)" onclick="jat.jbpm.leaveList.leaveSingleApplyFn(\''+_value+'\')">申请</a>';
+		    			_str += '&nbsp;&nbsp;';
+		    		}
+		    		_str += '<a href="">查看</a>';
+		    		return _str;
+		    	}
 		    }
 		]);
 		var _leaveStore = new Ext.data.JsonStore({
 			url: 'leave_listLeave.action',
-			Field: ['day','content','status','applyTime']
+			totalProperty: 'totalProperty',
+			root: 'root',
+			fields: ['day','content','status','addTime','startTime','endTime','id']
 		});
 		var _tbar = new Ext.Toolbar({
 			items: [{
 		    	text: '添加',
 		    	iconCls: '',
+		    	tooltip: '添加请假信息',
 		    	handler: jat.jbpm.leaveList.leaveAddFn
 		    },{
 		    	text: '申请',
 		    	iconCls: '',
-		    	handler: ''
+		    	handler: jat.jbpm.leaveList.leaveApplyFn
 		    },{
 		    	text: '删除',
 		    	iconCls: '',
 		    	handler: ''
 		    }]
 		});
-		var _paging = new jat.scommon.gridUtils.PagingToolbar("leaveListPage", _leaveStore, 20);
+		var _paging = new jat.scommon.gridUtils.PagingToolbar("leaveListPage", _leaveStore, 8);
 		jat.jbpm.leaveList.LeaveGrid.superclass.constructor.call(this,{
+			//充满整行
+			viewConfig : {
+				forceFit : true
+			},
+			stripeRows : true, //行颜色交替效果
 			monitorResize: true, 
 			doLayout: function() { 
 				this.setWidth(document.body.clientWidth-205);
@@ -139,7 +184,7 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		_leaveStore.load({
 			params: {
 				start: 0,
-				limit: 20
+				limit: 8
 			}
 		});
 	}
@@ -179,9 +224,24 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	dataIndex: 'content',
 		    	align: 'center'
 		    },{
+		    	header: '开始时间',
+		    	dataIndex: 'startTime',
+		    	align: 'center'
+		    },{
+		    	header: '结束时间',
+		    	dataIndex: 'endTime',
+		    	align: 'center'
+		    },{
 		    	header: '状态',
 		    	dataIndex: 'status',
-		    	align: 'center'
+		    	align: 'center',
+		    	renderer: function(value){
+		    		if(value == 0){
+		    			return "未申请";
+		    		}else if(value == 1){
+		    			return "审核中";
+		    		}
+		    	}
 		    },{
 		    	header: '申请时间',
 		    	dataIndex: 'applyTime',
@@ -190,7 +250,9 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		]);
 		var _taskStore = new Ext.data.JsonStore({
 			url: 'leave_listTask.action',
-			Field: ['day','content','status','applyTime']
+			totalProperty: 'totalProperty',
+			root: 'root',
+			fields: ['day','content','status','applyTime']
 		});
 		var _tbar = new Ext.Toolbar({
 			items: [{
@@ -203,7 +265,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	handler: ''
 		    }]
 		});
-		var _paging = new jat.scommon.gridUtils.PagingToolbar("taskListPage", _taskStore, 20);
+		var _paging = new jat.scommon.gridUtils.PagingToolbar("taskListPage", _taskStore, 8);
 		jat.jbpm.leaveList.TaskGrid.superclass.constructor.call(this,{
 			monitorResize: true, 
 			doLayout: function() { 
@@ -221,7 +283,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		_taskStore.load({
 			params: {
 				start: 0,
-				limit: 20
+				limit: 8
 			}
 		});
 	}
@@ -234,4 +296,27 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 jat.jbpm.leaveList.leaveAddFn = function(){
 	var leaveWin = new jat.jbpm.leaveForm.LeaveWin();
 	leaveWin.show();
-}
+};
+/**
+ * 单个请假申请 
+ */
+jat.jbpm.leaveList.leaveSingleApplyFn = function(_id){
+	Ext.Ajax.request({
+		url: 'leave_apply.action',
+		method: 'post',
+		params: {
+			ids: _id
+		},
+		success: function(response, options){
+			var _data = Ext.util.JSON.decode(response.responseText);
+			Ext.Msg.alert("提示",_data.msg);
+			Ext.getCmp('leaveGridId').getStore().reload({
+				params: {
+					start: 0,
+					limit: 8
+				}
+			});
+		},
+		failure: scommon.ajaxFailure
+	});
+};

@@ -35,6 +35,7 @@ public class Leaved {
 	private String taskId;
 	private Long startTime;
 	private Long endTime;
+	private Long addTime;
 	
 	@Id
 	@GenericGenerator(name = "system-uuid", strategy = "com.scommon.util.UUIDGenerator")
@@ -63,7 +64,7 @@ public class Leaved {
 	public void setDay(Integer day) {
 		this.day = day;
 	}
-	@Basic(optional=false)
+	@Basic(optional=true)
 	@Column(name="apply_time",insertable=true,updatable=true,length=30)
 	public Long getApplyTime() {
 		return applyTime;
@@ -107,6 +108,13 @@ public class Leaved {
 	}
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+	@Column(name="add_time", insertable=true, updatable=true)
+	public Long getAddTime() {
+		return addTime;
+	}
+	public void setAddTime(Long addTime) {
+		this.addTime = addTime;
 	}
 }
    
