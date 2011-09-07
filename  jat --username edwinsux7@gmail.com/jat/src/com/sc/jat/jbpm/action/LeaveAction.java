@@ -121,25 +121,26 @@ public class LeaveAction extends BaseAction{
 		this.outForSuccess("申请成功");
 	}
 	
+	public void audit(){
+		leaveService.updateLeaveStatus(taskId, leave);
+		this.outForSuccess("审核完成");
+	}
+	
 	/**
 	 * 
-	 * agree:同意   
+	 * edit:编辑  
 	 *   
-	 * @param  @return    设定文件   
-	 * @return String    DOM对象   
+	 * @param  @throws Exception    设定文件   
+	 * @return void    DOM对象   
 	 * @throws    
-	 * @since  leave21.0
+	 * @since  jat1.0
 	 */
-	public String agree(){
-		leaveService.agree(taskId);
-		return "leaveList";
+	public void edit() throws Exception{
+		String leaves = leaveService.getById(ids[0]);
+		this.out(leaves);
 	}
 	
-	public String disagree(){
-		leaveService.disagree(taskId);
-		return "leaveList";
-	}
-	
+	/*******************setter and getter****************/
 	public LeaveService getLeaveService() {
 		return leaveService;
 	}

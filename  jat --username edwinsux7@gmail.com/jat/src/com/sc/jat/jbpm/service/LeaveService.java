@@ -64,25 +64,6 @@ public interface LeaveService {
 	public void applyLeave(String leaveId, String position);
 	/**
 	 * 
-	 * agree:处理同意请求   
-	 *   
-	 * @param  @param taskId    设定文件   
-	 * @return void    DOM对象   
-	 * @throws    
-	 * @since  leave21.0
-	 */
-	public void agree(String taskId);
-	/**
-	 * disagree:请求不同意
-	 *   
-	 * @param  @param taskId    设定文件   
-	 * @return void    DOM对象   
-	 * @throws    
-	 * @since  leave21.0
-	 */
-	public void disagree(String taskId);
-	/**
-	 * 
 	 * getLeaves:请假列表分页
 	 *   
 	 * @param  @param id
@@ -107,5 +88,27 @@ public interface LeaveService {
 	 * @since  jat1.0
 	 */
 	public String getTasks(String username, Integer start, Integer limit);
+	/**
+	 * 
+	 * getById:按id查询   
+	 *   
+	 * @param  @param string
+	 * @param  @return    设定文件   
+	 * @return String    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public String getById(String leaveId);
+	/**
+	 * 
+	 * updateLeaveStatus:审核修改状态  
+	 *   
+	 * @param  @param taskId
+	 * @param  @param leave    设定文件   
+	 * @return void    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public void updateLeaveStatus(String taskId, Leaved leave);
 }
    
