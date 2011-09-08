@@ -55,7 +55,7 @@ public class JbpmDao {
 	 * 
 	 * findByUserName:按用户名从task表中查询出任务   
 	 *   
-	 * @param  @param userName
+	 * @param  @param userName 任务的分派者
 	 * @param  @return    设定文件   
 	 * @return List<Task>    DOM对象   
 	 * @throws    
