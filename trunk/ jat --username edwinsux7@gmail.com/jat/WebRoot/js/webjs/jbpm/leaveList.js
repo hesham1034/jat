@@ -255,7 +255,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    		var _str = '';
 		    		var _status = _record.data['status'];
 		    		var _id = _record.data['id'];
-		    		if(_status == 1 || _status == 2 || _status == 7){
+		    		if(_status == 1 || _status == 2){
 		    			_str += '<a href="javascript:void(0)" onclick="jat.jbpm.leaveList.leaveAuditFn(\''+_value+'\', \''+_id+'\')">审核</a>&nbsp;&nbsp;';
 		    		}
 		    		_str += '<a href="javascript:void(0)">查看</a>';
