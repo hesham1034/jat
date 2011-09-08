@@ -29,13 +29,23 @@ public class TypeStaticValues {
 	 */
 	public static final int LEAVE_STATUS_AGREEBYBOSS = 4;
 	/**
-	 * 经理驳回
+	 * 经理不通过
 	 */
 	public static final int LEAVE_STATUS_DISAGREEBYMANAGER = 5;
 	/**
-	 * 老板驳回
+	 * 老板不通过
 	 */
 	public static final int LEAVE_STATUS_DISAGREEBYBOSS = 6;
+	/**
+	 * 经理驳回
+	 */
+	public static final int LEAVE_STATUS_REJECTBYMANAGER = 7;
+	/**
+	 * 老板驳回
+	 */
+	public static final int LEAVE_STATUS_REJECTBYBOSS = 8;
+	
+	
 	
 	
 }

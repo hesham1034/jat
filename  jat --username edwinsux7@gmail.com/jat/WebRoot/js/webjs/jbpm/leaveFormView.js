@@ -66,7 +66,7 @@ jat.jbpm.leaveFormView.LeaveFormView = Ext.extend(Ext.form.FormPanel, {
 				triggerAction: 'all',
 				store: new Ext.data.SimpleStore({
 					fields: ['name', 'value'],
-					data: [['通过',0],['驳回',1]]
+					data: [['通过',0],['不通过',1],['驳回',2]]
 				}),
 				width: 150,
 				displayField: 'name',
@@ -93,6 +93,7 @@ jat.jbpm.leaveFormView.LeaveFormView = Ext.extend(Ext.form.FormPanel, {
 						},
 						success: function(_form, _action){
 							Ext.Msg.alert("提示",_action.result.msg);
+							Ext.getCmp('leaveFormViewWinId').destroy();
 							Ext.getCmp('taskGridId').getStore().reload({
 								params: {
 									start: 0,

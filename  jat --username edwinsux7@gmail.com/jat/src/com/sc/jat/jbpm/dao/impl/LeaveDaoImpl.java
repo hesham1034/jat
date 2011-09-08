@@ -39,7 +39,7 @@ public class LeaveDaoImpl extends BaseDao<Leaved>implements LeaveDao{
 	}
 
 	public PagingBean findByUserIdAndPage(String userId, Integer start, Integer limit) {
-		String hql = "from Leaved where users.id = '"+userId+"'";  
+		String hql = "from Leaved where users.id = '"+userId+"' order by addTime desc";  
 		return super.findStringByPage(hql, start, limit);   
 	}
 

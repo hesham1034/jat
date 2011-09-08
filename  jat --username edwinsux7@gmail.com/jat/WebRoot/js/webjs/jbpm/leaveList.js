@@ -124,6 +124,9 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		    	renderer: function(_value,  _cellMeta, _record, _rowIndex, _columnIndex, _store){
 		    		var _status = _record.data['status'];
 		    		var _str = '';
+		    		if(_status == 0 || _status == 7 || _status == 8){
+		    			_str += '<a href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
+		    		}
 		    		if(_status == 0){
 		    			_str += '<a href="javascript:void(0)" onclick="jat.jbpm.leaveList.leaveSingleApplyFn(\''+_value+'\')">申请</a>';
 		    			_str += '&nbsp;&nbsp;';
@@ -252,7 +255,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		    		var _str = '';
 		    		var _status = _record.data['status'];
 		    		var _id = _record.data['id'];
-		    		if(_status == 1 || _status == 2){
+		    		if(_status == 1 || _status == 2 || _status == 7){
 		    			_str += '<a href="javascript:void(0)" onclick="jat.jbpm.leaveList.leaveAuditFn(\''+_value+'\', \''+_id+'\')">审核</a>&nbsp;&nbsp;';
 		    		}
 		    		_str += '<a href="javascript:void(0)">查看</a>';
@@ -365,8 +368,12 @@ jat.jbpm.leaveList.returnStatus =  function(value){
 	}else if(value == 4){
 		return "老板审核通过";
 	}else if(value == 5){
-		return "经理驳回";
+		return "经理审核不通过";
 	}else if(value == 6){
+		return "老板审核不通过";
+	}else if(value == 7){
+		return "经理驳回";
+	}else if(value == 8){
 		return "老板驳回";
 	}
 };
