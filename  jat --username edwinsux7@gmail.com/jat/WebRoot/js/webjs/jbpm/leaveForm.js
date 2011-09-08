@@ -72,6 +72,7 @@ jat.jbpm.leaveForm.leaveSaveFn = function(){
 					});
 				}
 			});
+			Ext.getCmp('nextTaskName').setValue(action.result.msg);
 		},
 		failure: scommon.failure
 	});

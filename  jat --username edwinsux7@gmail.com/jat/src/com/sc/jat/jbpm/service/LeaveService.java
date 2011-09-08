@@ -50,7 +50,19 @@ public interface LeaveService {
 	 */
 	public String getTasks(String loginName);
 
-	public void save(Leaved leave) throws SaveException;
+	/**
+	 * 
+	 * save:保存
+	 *   
+	 * @param  @param leave
+	 * @param  @param position
+	 * @param  @return
+	 * @param  @throws SaveException    设定文件   
+	 * @return String    下一任务名称   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public String save(Leaved leave, String position) throws SaveException;
 	/**
 	 * 
 	 * applyLeave:申请请假

@@ -83,8 +83,15 @@ public class LeaveServiceImpl implements LeaveService{
 		return JsonUtils.getJsonAndConvertFilter(taskBean, props, Long.class, CommonStaticValues.SYS_DATE_FORMAT, fprops);
 	}
 	
-	public void save(Leaved leave) throws SaveException{
+	public String save(Leaved leave, String position) throws SaveException{
 		leaveDao.save(leave);
+		String nextTaskName = null;
+		if("职员".equals(position)){
+			nextTaskName = "经理审核";
+		}else if("经理".equals(position)){
+			nextTaskName = "老板审核";
+		}
+		return nextTaskName;
 	}
 	
 	public void applyLeave(String leaveId, String position) {
