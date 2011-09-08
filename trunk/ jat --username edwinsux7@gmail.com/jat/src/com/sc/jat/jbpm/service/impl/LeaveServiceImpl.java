@@ -92,11 +92,14 @@ public class LeaveServiceImpl implements LeaveService{
 		Map<String, Object> map = new HashMap<String, Object>();
 		//当非职员登录时从变量集合中获取leaveId，即查询出属于自己的任务
 		map.put("leaveId", leaveId);
+		Leaved leave = leaveDao.findByLeaveId(leaveId);
 		if("职员".equals(position)){
 			map.put("manager", "否");
 			map.put("username", "xi");
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_AUDITINGBYMANAGER);
 		}else if("经理".equals(position)){
 			map.put("manager", "是");
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_AUDITINGBYBOSS);
 		}
 		//leave,writeForm为jpdl文件中配置
 		//开始一流程实例
@@ -107,8 +110,6 @@ public class LeaveServiceImpl implements LeaveService{
 		jbpmDao.completeTask(taskId);
 		
 		//修改请假信息状态
-		Leaved leave = leaveDao.findByLeaveId(leaveId);
-		leave.setStatus(TypeStaticValues.LEAVE_STATUS_AUDITINGBYMANAGER);//待审核
 		leaveDao.update(leave);
 	}
 	
@@ -127,6 +128,8 @@ public class LeaveServiceImpl implements LeaveService{
 		int day = leave.getDay();
 		if(day > 5){
 			jbpmDao.completeTask(taskId, "请假天数>5");
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_AUDITINGBYBOSS);
+			leaveDao.update(leave);
 		}else{
 			jbpmDao.completeTask(taskId, "经理批准");
 			leave.setStatus(TypeStaticValues.LEAVE_STATUS_AGREEBYMANAGER);//通过
@@ -146,6 +149,21 @@ public class LeaveServiceImpl implements LeaveService{
 		}else{
 			jbpmDao.completeTask(taskId, "经理不批准");
 			leave.setStatus(TypeStaticValues.LEAVE_STATUS_DISAGREEBYMANAGER);//不通过
+		}
+		leave.setAuditContent(auditContent);
+		leaveDao.update(leave);
+	}
+	public void reject(String taskId, String auditContent){
+		String leaveId = (String) jbpmDao.findByTaskIdAndProperty(taskId, "leaveId");
+		Leaved leave = leaveDao.findByLeaveId(leaveId);
+		Task task = jbpmDao.findByTaskId(taskId);
+		String assignee = task.getAssignee();
+		if("sux".equals(assignee)){
+			jbpmDao.completeTask(taskId, "老板驳回");
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_REJECTBYBOSS);
+		}else{
+			jbpmDao.completeTask(taskId, "经理驳回");
+			leave.setStatus(TypeStaticValues.LEAVE_STATUS_REJECTBYMANAGER);
 		}
 		leave.setAuditContent(auditContent);
 		leaveDao.update(leave);
@@ -186,6 +204,9 @@ public class LeaveServiceImpl implements LeaveService{
 		}
 		if(leave.getStatus() == 1){
 			this.disagree(taskId, leave.getAuditContent());
+		}
+		if(leave.getStatus() == 2){
+			this.reject(taskId, leave.getAuditContent());
 		}
 	}
 	

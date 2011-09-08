@@ -165,7 +165,7 @@ public class JbpmDao {
 	public PagingBean findByUserName(String username, Integer start, Integer limit) {
 		TaskQuery query = taskService.createTaskQuery();
 		query.assignee(username);
-		query.orderDesc(TaskQuery.PROPERTY_PRIORITY);
+		query.orderDesc(TaskQuery.PROPERTY_CREATEDATE);
 		int total = (int) query.count();
 		List<Task> tasks = query.page(start, limit).list();
 		PagingBean taskBean = new PagingBean(total, tasks);
