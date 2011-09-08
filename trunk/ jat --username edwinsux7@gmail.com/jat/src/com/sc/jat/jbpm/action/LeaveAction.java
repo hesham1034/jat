@@ -97,8 +97,8 @@ public class LeaveAction extends BaseAction{
 		leave.setAddTime(System.currentTimeMillis());
 		leave.setStatus(TypeStaticValues.LEAVE_STATUS_UNAPPLY);
 		leave.setUsers(userDetails.getUser());
-		leaveService.save(leave);
-		this.outForSuccess("保存成功");
+		String nextTaskName = leaveService.save(leave, userDetails.getUser().getPosition());
+		this.outForSuccess("保存成功", nextTaskName);
 	}
 	/**
 	 * 
