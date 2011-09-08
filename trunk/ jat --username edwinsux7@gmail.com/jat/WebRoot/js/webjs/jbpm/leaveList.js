@@ -19,8 +19,12 @@ jat.jbpm.leaveList.LeavePanel = Ext.extend(Ext.Panel, {
 	constructor: function(){
 		var _leaveGrid = new jat.jbpm.leaveList.LeaveGrid();
 		var _leaveQueryForm = new jat.jbpm.leaveList.LeaveQueryForm();
+		var _nextTaskPanel = new jat.jbpm.leaveList.NextTaskPanel();
 		jat.jbpm.leaveList.LeavePanel.superclass.constructor.call(this,{
-			items: [_leaveQueryForm, _leaveGrid]
+			items: [_leaveQueryForm,{
+				layout: 'column',
+				items: [_leaveGrid ,_nextTaskPanel]
+			}]
 		});
 	}
 });
@@ -100,13 +104,11 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		    },{
 		    	header: '开始时间',
 		    	dataIndex: 'startTime',
-		    	align: 'center',
-		    	width: 150
+		    	align: 'center'
 		    },{
 		    	header: '结束时间',
 		    	dataIndex: 'endTime',
-		    	align: 'center',
-		    	width: 150
+		    	align: 'center'
 		    },{
 		    	header: '状态',
 		    	dataIndex: 'status',
@@ -115,8 +117,7 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		    },{
 		    	header: '填写时间',
 		    	dataIndex: 'addTime',
-		    	align: 'center',
-		    	width: 150
+		    	align: 'center'
 		    },{
 		    	header: '操作',
 		    	dataIndex: 'id',
@@ -160,6 +161,7 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		});
 		var _paging = new jat.scommon.gridUtils.PagingToolbar("leaveListPage", _leaveStore, 8);
 		jat.jbpm.leaveList.LeaveGrid.superclass.constructor.call(this,{
+			columnWidth: .89,
 			//充满整行
 			viewConfig : {
 				forceFit : true
@@ -167,7 +169,7 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 			stripeRows : true, //行颜色交替效果
 			monitorResize: true, 
 			doLayout: function() { 
-				this.setWidth(document.body.clientWidth-205);
+				this.setWidth(document.body.clientWidth-410);
 				this.setHeight((document.body.clientHeight-270)/2);
 				Ext.grid.GridPanel.prototype.doLayout.call(this); 
 			}, 
@@ -186,6 +188,48 @@ jat.jbpm.leaveList.LeaveGrid = Ext.extend(Ext.grid.GridPanel, {
 		});
 	}
 });
+/**
+ * 下一任务
+ */
+var _nextTaskStore = new Ext.data.JsonStore({
+	url: '',
+	fields: ['username']
+});
+jat.jbpm.leaveList.NextTaskPanel = Ext.extend(Ext.Panel,{
+	title: '下一任务',
+	constructor: function(){
+		jat.jbpm.leaveList.NextTaskPanel.superclass.constructor.call(this,{
+			defaults: {
+				labelWidth: 60,
+				labelAlign: 'right'
+			},
+			columnWidth: .15,
+			border: false,
+			items: [{
+				layout: 'form',
+				style: 'padding-top: 10px;',
+				items: [{
+					xtype: 'textfield',
+					fieldLabel: '下一任务',
+					width: 110,
+					id: 'nextTaskName'
+				}]
+			},{
+				layout: 'form',
+				items: [{
+					xtype: 'combo',
+					fieldLabel: '执行人',
+					mode: 'local',
+					store: _nextTaskStore,
+					displayField: 'username',
+					valueField: 'username',
+					width: 110,
+					id: 'nextTaskPerson'
+				}]
+			}]
+		}); 
+	}
+});
 
 /**
  * 任务面板
@@ -196,8 +240,12 @@ jat.jbpm.leaveList.TaskPanel = Ext.extend(Ext.Panel, {
 	constructor: function(){
 		var _leaveQueryForm = new jat.jbpm.leaveList.LeaveQueryForm();
 		var _taskGrid = new jat.jbpm.leaveList.TaskGrid();
+		var _nextTaskPanel = new jat.jbpm.leaveList.NextTaskPanel();
 		jat.jbpm.leaveList.TaskPanel.superclass.constructor.call(this,{
-			items: [_leaveQueryForm, _taskGrid]
+			items: [_leaveQueryForm,{
+				layout: 'column',
+				items: [_taskGrid ,_nextTaskPanel]
+			}]
 		});
 	}
 });
@@ -282,6 +330,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 		});
 		var _paging = new jat.scommon.gridUtils.PagingToolbar("taskListPage", _taskStore, 8);
 		jat.jbpm.leaveList.TaskGrid.superclass.constructor.call(this,{
+			columnWidth: .89,
 			//充满整行
 			viewConfig : {
 				forceFit : true
@@ -289,7 +338,7 @@ jat.jbpm.leaveList.TaskGrid = Ext.extend(Ext.grid.GridPanel, {
 			stripeRows : true, //行颜色交替效果
 			monitorResize: true, 
 			doLayout: function() { 
-				this.setWidth(document.body.clientWidth-205);
+				this.setWidth(document.body.clientWidth-410);
 				this.setHeight((document.body.clientHeight-270)/2);
 				Ext.grid.GridPanel.prototype.doLayout.call(this); 
 			},
