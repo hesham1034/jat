@@ -1,6 +1,8 @@
 
 package com.sc.jat.ss.dao;   
 
+import java.util.List;
+
 import com.sc.jat.ss.model.Users;
 import com.scommon.exception.QueryException;
 import com.scommon.util.PagingBean;
@@ -37,6 +39,17 @@ public interface UsersDao {
 	 * @since  jat1.0
 	 */
 	PagingBean findByPage(Integer start, Integer limit);
+	/**
+	 * 
+	 * findUsersByPosition:按职位查询   
+	 *   
+	 * @param  @param string
+	 * @param  @return    设定文件   
+	 * @return List<Users>    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	List<Users> findUsersByPosition(String position);
 
 }
    

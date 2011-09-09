@@ -34,6 +34,7 @@ public class LeaveAction extends BaseAction{
 	private String startTime;
 	private String endTime;
 	private String[] ids;
+	private String nextTaskPerson;
 	
 	/**
 	 * 
@@ -140,6 +141,40 @@ public class LeaveAction extends BaseAction{
 		this.out(leaves);
 	}
 	
+	/**
+	 * 
+	 * listNextPerson:列出下一任务的候选人   
+	 *   
+	 * @param  @throws Exception    设定文件   
+	 * @return void    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public void listNextPerson() throws Exception{
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
+		.getAuthentication().getPrincipal();
+		Users user = userDetails.getUser();
+		String nextPersons = leaveService.getNextPerson(user.getPosition());
+		this.out(nextPersons);
+	}
+	
+	/**
+	 * 
+	 * listNextTask:取得下一任务名称
+	 *   
+	 * @param  @throws Exception    设定文件   
+	 * @return void    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public void listNextTask() throws Exception{
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
+		.getAuthentication().getPrincipal();
+		Users user = userDetails.getUser();
+		String nextTaskName = leaveService.getNextTaskName(user.getPosition());
+		this.outForSuccess(nextTaskName);
+	}
+	
 	/*******************setter and getter****************/
 	public LeaveService getLeaveService() {
 		return leaveService;
@@ -204,5 +239,6 @@ public class LeaveAction extends BaseAction{
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+
 }
    

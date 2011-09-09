@@ -122,5 +122,28 @@ public interface LeaveService {
 	 * @since  jat1.0
 	 */
 	public void updateLeaveStatus(String taskId, Leaved leave);
+	/**
+	 * 
+	 * getNextPerson:获取下一任务的候选人   
+	 *   
+	 * @param  @param nextTaskName
+	 * @param  @return    设定文件   
+	 * @return String    DOM对象   
+	 * @throws Exception 
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public String getNextPerson(String nextTaskName) throws Exception;
+	/**
+	 * 
+	 * getNextTaskName:取得下一任务名称
+	 *   
+	 * @param  @param position
+	 * @param  @return    设定文件   
+	 * @return String    DOM对象   
+	 * @throws    
+	 * @since  jat1.0
+	 */
+	public String getNextTaskName(String position);
 }
    

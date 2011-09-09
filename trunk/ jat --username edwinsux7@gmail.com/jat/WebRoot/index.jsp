@@ -1,3 +1,6 @@
+<%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
+<%@page import="com.sc.jat.ss.model.Users"%>
+<%@page import="com.sc.jat.ss.vo.CustomUserDetails"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ include file="common/common.jsp" %>
 
@@ -53,5 +56,11 @@
   
   <body>
 	  	<div id="mainPage"></div>
+	  	<%
+	  		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
+			.getAuthentication().getPrincipal();
+			Users user = userDetails.getUser();
+	  	%>
+	  	<input type="hidden" id="position" value="<%=user.getPosition()%>"/>
   </body>
 </html>

@@ -45,5 +45,9 @@ public class UsersDaoImpl extends BaseDao<Users> implements UsersDao{
 		String hql = "FROM Users";
 		return findStringByPage(hql, start, limit);
 	}
+
+	public List<Users> findUsersByPosition(String position) {
+		return findByProperty("position", position);  
+	}
 }
    
