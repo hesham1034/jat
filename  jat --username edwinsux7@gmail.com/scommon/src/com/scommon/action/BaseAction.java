@@ -55,6 +55,18 @@ public class BaseAction extends ActionSupport{
 	}
 	/**
 	 * 
+	 * outForExt:ajax请求成功时返回信息 
+	 *   
+	 * @param  @param msg    设定文件   
+	 * @return void    DOM对象   
+	 * @throws    
+	 * @since  scommon1.0
+	 */
+	public void outForSuccess(String msg, String other){
+		this.out("{success: true, msg: '"+msg+"', other: '"+other+"'}");
+	}
+	/**
+	 * 
 	 * outForException:系统异常时返回信息
 	 *   
 	 * @param  @param msg    设定文件   
