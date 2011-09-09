@@ -14,7 +14,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 public class Password {
 	public static void main(String[] args){
 		Md5PasswordEncoder md5 = new Md5PasswordEncoder();
-		String pwd = md5.encodePassword("sux", "sux");
+		String pwd = md5.encodePassword("boss", "boss");
 		System.out.println(pwd);
 	}
 }

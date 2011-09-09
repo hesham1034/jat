@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.jbpm.api.ProcessInstance;
 import org.jbpm.api.task.Task;
@@ -20,6 +21,8 @@ import com.sc.jat.jbpm.dao.LeaveDao;
 import com.sc.jat.jbpm.dao.impl.JbpmDao;
 import com.sc.jat.jbpm.model.Leaved;
 import com.sc.jat.jbpm.service.LeaveService;
+import com.sc.jat.ss.dao.UsersDao;
+import com.sc.jat.ss.model.Users;
 import com.scommon.emnus.CommonStaticValues;
 import com.scommon.exception.SaveException;
 import com.scommon.util.PagingBean;
@@ -40,6 +43,7 @@ public class LeaveServiceImpl implements LeaveService{
 	Log log = LogFactory.getLog(LeaveServiceImpl.class);
 	private JbpmDao jbpmDao;
 	private LeaveDao leaveDao;
+	private UsersDao usersDao;
 
 	public void deploy(String path) throws Exception{
 		String version = jbpmDao.deploy(path);
@@ -85,13 +89,7 @@ public class LeaveServiceImpl implements LeaveService{
 	
 	public String save(Leaved leave, String position) throws SaveException{
 		leaveDao.save(leave);
-		String nextTaskName = null;
-		if("职员".equals(position)){
-			nextTaskName = "经理审核";
-		}else if("经理".equals(position)){
-			nextTaskName = "老板审核";
-		}
-		return nextTaskName;
+		return null;
 	}
 	
 	public void applyLeave(String leaveId, String position) {
@@ -217,6 +215,27 @@ public class LeaveServiceImpl implements LeaveService{
 		}
 	}
 	
+
+	public String getNextPerson(String position) throws Exception{
+		List<Users> users = null;
+		String nextTaskName = getNextTaskName(position);
+		if("经理审核".equals(nextTaskName)){
+			users = usersDao.findUsersByPosition("经理");
+		}else if("老板审核".equals(nextTaskName)){
+			users = usersDao.findUsersByPosition("老板");
+		}
+		return JSONArray.fromObject(users).toString();   
+	}
+	
+	public String getNextTaskName(String position){
+		String nextTaskName = null;
+		if("职员".equals(position)){
+			nextTaskName = "经理审核";
+		}else if("经理".equals(position)){
+			nextTaskName = "老板审核";
+		}
+		return nextTaskName;
+	}
 	/**
 	 * 
 	 * updateApplyTime:添加申请时间 
@@ -248,5 +267,12 @@ public class LeaveServiceImpl implements LeaveService{
 		this.leaveDao = leaveDao;
 	}
 
+	public UsersDao getUsersDao() {
+		return usersDao;
+	}
+	@Resource
+	public void setUsersDao(UsersDao usersDao) {
+		this.usersDao = usersDao;
+	}
 }
    
