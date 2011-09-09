@@ -1,26 +1,26 @@
-Ext.namespace("jat.authority");
+Ext.namespace("jat.authority.resourceList");
 /**
  * @author sux
  * @date 2011-09-03
  * @desc 用户信息面板
  */
 
-jat.authority.UserPanel = Ext.extend(Ext.Panel, {
-	id: 'userPanelId',
+jat.authority.resourceList.ResourceListPanel = Ext.extend(Ext.Panel, {
+	id: 'resourceListPanelId',
 	constructor: function(){
-		var _userQueryForm = new jat.authority.UserQueryForm();
-		var _userList = new jat.authority.UserList();
-		jat.authority.UserPanel.superclass.constructor.call(this,{
-			items: [_userQueryForm,_userList]
+		var _resourceQueryForm = new jat.authority.resourceList.ResourceQueryForm();
+		var _resourceList = new jat.authority.resourceList.ResourceList();
+		jat.authority.resourceList.ResourceListPanel.superclass.constructor.call(this,{
+			items: [_resourceQueryForm,_resourceList]
 		});
 	}
 });
 
-jat.authority.UserQueryForm = Ext.extend(Ext.form.FormPanel, {
-	id: 'userQueryFormId',
+jat.authority.resourceList.ResourceQueryForm = Ext.extend(Ext.form.FormPanel, {
+	id: 'resourceQueryFormId',
 	height: 30,
 	constructor: function(){
-		jat.authority.UserQueryForm.superclass.constructor.call(this,{
+		jat.authority.resourceList.ResourceQueryForm.superclass.constructor.call(this,{
 			layout: 'table',
 			layoutConfig: {
 				columns: 4
@@ -33,14 +33,20 @@ jat.authority.UserQueryForm = Ext.extend(Ext.form.FormPanel, {
 				layout: 'form',
 				items: [{
 					xtype: 'textfield',
-					fieldLabel: '用户名',
+					fieldLabel: '名称'
+				}]
+			},{
+				layout: 'form',
+				items: [{
+					xtype: 'textfield',
+					fieldLabel: '请求URL',
 					width: 100
 				}]
 			},{
 				layout: 'form',
 				items: [{
 					xtype: 'textfield',
-					fieldLabel: '角色名',
+					fieldLabel: '是否禁用',
 					width: 100
 				}]
 			},{
@@ -56,24 +62,19 @@ jat.authority.UserQueryForm = Ext.extend(Ext.form.FormPanel, {
 	}
 });
 
-jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
-	id: 'userListId',
+jat.authority.resourceList.ResourceList = Ext.extend(Ext.grid.GridPanel,{
+	id: 'resourceListId',
 	constructor: function(){
 		var _sm = new Ext.grid.CheckboxSelectionModel();
 		var _num = new Ext.grid.RowNumberer();
 		var _cm = new Ext.grid.ColumnModel([
-				_num, _sm,
-				{
-					header: '用户名',
-					dataIndex: 'username',
+				_num, _sm,{
+					header: '名称',
+					dataIndex: 'name',
 					align: 'center'
 				},{
-					header: '角色名',
-					dataIndex: 'role',
-					align: 'center'
-				},{
-					header: '职位',
-					dataIndex: 'position',
+					header: '请求URL',
+					dataIndex: 'url',
 					align: 'center'
 				},{
 					header: '是否禁用',
@@ -83,20 +84,24 @@ jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 						if(value == 1){ return "是";}
 						else{return "否";}
 					}
+				},{
+					header: '描述',
+					dataIndex: 'describle',
+					align: 'center'
 				}
 			]);
-		var _userStore = new Ext.data.JsonStore({
-			url: 'resources_list.action',
+		var _store = new Ext.data.JsonStore({
+			url: 'users_list.action',
 			root: 'root',
 			totalProperty: 'totalProperty',
-			fields: ['username', {name: 'role', convert: function(v){return v.name;}}, 'position', 'enabled']
+			fields: ['name', 'url', 'describle', 'enabled']
 		});
 		var _tbar = new Ext.Toolbar({
 			items: [{}]
 		});
-		var _paging = new jat.scommon.gridUtils.PagingToolbar("userListPage", _userStore, 20);
+		var _paging = new jat.scommon.gridUtils.PagingToolbar("resourceListPage", _store, 20);
 		
-		jat.authority.UserList.superclass.constructor.call(this,{
+		jat.authority.resourceList.ResourceList.superclass.constructor.call(this,{
 			viewConfig : {
 				forceFit : true
 			},
@@ -110,12 +115,12 @@ jat.authority.UserList = Ext.extend(Ext.grid.GridPanel,{
 			},
 			sm: _sm,
 			cm: _cm,
-			store: _userStore,
+			store: _store,
 			tbar: _tbar,
 			bbar: _paging
 		});
 		
-		_userStore.load({
+		_store.load({
 			params: {
 				start: 0,
 				limit: 20

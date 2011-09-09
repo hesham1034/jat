@@ -35,6 +35,9 @@ public class JbpmDao {
 	private ExecutionService executionService;
 	private HistoryService historyService;
 	private ManagementService managementService;
+	/**
+	 * 身份
+	 */
 	private IdentityService identityService;
 
 	/**
