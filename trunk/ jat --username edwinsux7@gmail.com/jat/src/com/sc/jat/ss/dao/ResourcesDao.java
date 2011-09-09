@@ -3,6 +3,8 @@ package com.sc.jat.ss.dao;
 
 import java.util.List;
 
+import com.scommon.util.PagingBean;
+
 /**   
  * ClassName:ResourcesDao   
  * Function: TODO ADD FUNCTION   
@@ -22,6 +24,8 @@ public interface ResourcesDao {
 	 * @since  ss31.0
 	 */
 	List<String> findAllUrl();
+
+	PagingBean findByPage(int start, int limit);
 
 }
    

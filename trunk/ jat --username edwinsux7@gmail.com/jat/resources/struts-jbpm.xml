@@ -6,5 +6,6 @@
 <!-- 全部继承struts.xml中的jat-default包，此包继承struts-default同时包含异常处理信息 -->
 	<package name="jbpm" extends="jat-default" namespace="/">
 		<action name="leave_*" class="leaveAction" method="{1}"></action>
+		<action name="resources_*" class="resourcesAction" method="{1}"></action>
 	</package>
 </struts>

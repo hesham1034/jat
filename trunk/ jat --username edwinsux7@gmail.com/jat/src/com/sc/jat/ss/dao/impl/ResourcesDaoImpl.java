@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.sc.jat.ss.dao.ResourcesDao;
 import com.sc.jat.ss.model.Resources;
 import com.scommon.dao.BaseDao;
+import com.scommon.util.PagingBean;
 
 /**   
  * ClassName:ResourcesDaoImpl   
@@ -23,6 +24,11 @@ public class ResourcesDaoImpl extends BaseDao<Resources> implements ResourcesDao
 	public List<String> findAllUrl() {
 		String hql = "SELECT url FROM Resources";  
 		return this.findByHQL(hql);   
+	}
+
+	public PagingBean findByPage(int start, int limit) {
+		String hql = "FROM Resources";  
+		return this.findStringByPage(hql, start, limit);   
 	}
 
 }
